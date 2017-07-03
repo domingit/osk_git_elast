@@ -1,0 +1,9 @@
+.form-control { width: 300px; }
+
+#close
+{
+    float:left;
+    position: absolute !important;
+    padding-top: 20px;
+    left: 350px;
+}

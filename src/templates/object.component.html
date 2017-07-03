@@ -1,0 +1,30 @@
+<div class="container-fluid row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" *ngIf="getSearchLabel()">
+            <h3 class="panel-title ">{{head_title}}</h3>
+            <div class="navbar-header">
+            <button type="button" class="navcorrect navbar-toggle collapsed" (click)="toggleState()">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            </div>
+            <div class="collapse navbar-collapse navcorrect tabscorrect" [ngClass]="{ 'in': isIn }">
+                <div class="nav navbar-right ">
+                    <ul class="nav nav-pills tabright">
+                        <ng-container *ngFor="let tabz of filteredTabs" id="tabs">
+                            <li *ngIf="!tabz.hidden" href class="routing_link routerUpdat" [routerLink]="[tabz.routerLink]" [queryParamsHandling]="'merge'"
+                            [routerLinkActive]="['active']" [class.disabled]="tabz.disabled">
+                                <a id="pillsText" data-toggle="pill" class="pillsText"
+                                [routerLinkActive]="['active']" [class.disabled]="tabz.disabled"
+                                
+                                >{{tabz.content}}</a></li>
+                        </ng-container>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

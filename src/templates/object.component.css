@@ -1,0 +1,57 @@
+.pillsText {
+    color: white !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    background-color: #1f71b5;
+    /*border-color: #105c9c;*/
+}
+
+.pillsText.a {
+    color: white !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+.pillsText:hover {
+    color: #337ab7 !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+.pillsText:active{
+    color: #337ab7 !important;
+    background-color: white;
+}
+
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover{
+    color: #337ab7 !important;
+    background-color: white;
+}
+
+.icon-bar{
+    background-color: white;
+}
+
+.panel-heading {
+    padding-bottom: 0px !important;
+    padding-right: 0px !important;
+}
+
+.panel-title {
+    position: absolute;
+    margin-top: 5px !important;
+}
+
+.navcorrect {
+    margin: 0px !important;
+}
+
+.tabscorrect {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+.tabright {
+    padding-right: 10px !important;
+}
