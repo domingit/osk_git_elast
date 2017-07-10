@@ -1,4 +1,7 @@
-        <div class="table-responsive" *ngIf="prodSearchResult">
+ <div>
+<div *ngIf="prodSearchResult" class="container-fluid"> 
+        <div class="table-responsive table-body-corr" *ngIf="prodSearchResult">
+        <!--<div class="table-responsive" *ngIf="prodSearchResult">-->    
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -68,7 +71,6 @@
                     </th>
                 </tr>
                 </thead>
-                <div *ngIf="prodSearchResult.length==0">No data found</div>
                 <tbody>
                 <tr *ngFor="let item of prodSearchResult">
                     <td class="hidden-xs">
@@ -81,12 +83,12 @@
                     </td>
                     <td>
                         <span *ngIf="item._source.service_name">
-                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.service_id)">
+                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.service_id, item._source.service_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
                             <span *ngIf="item._source.service_id == id"
                                   [innerHTML]="item._source.service_name"></span>
-                            <a *ngIf="item._source.service_id != id" (click)="updateGetUrl(item._source.service_id)">
+                            <a *ngIf="item._source.service_id != id" (click)="updateGetUrl(item._source.service_id, item._source.service_name)">
                                 <span [innerHTML]="item._source.service_name"></span>
                             </a>
                         </span>
@@ -101,12 +103,12 @@
                     </td>
                     <td>
                         <span *ngIf="item._source.product_name">
-                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.product_id)">
+                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.product_id, item._source.product_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
                             <span *ngIf="item._source.product_id == id"
                                   [innerHTML]="item._source.product_name"></span>
-                            <a *ngIf="item._source.product_id != id" (click)="updateGetUrl(item._source.product_id)">
+                            <a *ngIf="item._source.product_id != id" (click)="updateGetUrl(item._source.product_id, item._source.product_name)">
                                 <span [innerHTML]="item._source.product_name"></span>
                             </a>
                         </span>
@@ -118,10 +120,14 @@
                     <!--</td>-->
                     <!--td [innerHTML]="item._source.responsible_engineer+' ('+item._source.responsible_engineer_login+')'"></td-->
                 </tr>
+                <tr *ngIf="prodSearchResult">
+                    <td colspan = "7" *ngIf="prodSearchResult.length==0">No data found</td>
+                </tr>
                 </tbody>
             </table>
         </div>
-        <!--<div *ngIf="$prodSearchResult.length < prodResultTotal" class="panel-footer">
-            <!--<a href="" (click)="prodGetText='Loading ...';searchInProdModel(id, 10000);" [innerHTML]="prodGetText"></a>
-        </div>-->
-<!--</div>-->
+        <div *ngIf="moreData" class="panel-footer">
+            <a (click)="getMoreData();" [innerHTML]="prodText">{{prodText}}</a>
+        </div>
+</div>
+</div>

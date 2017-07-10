@@ -13,6 +13,9 @@ export class ObjectResponsibilityComponent {
     respSearchResult: any;
     sortReverseResp: any;
     sortPropResp:any;
+    countData = 200;
+    moreData = false;
+    respText: any;
 
     constructor(private _router: Router, private elastic: ElasticSearchService, private service: ObjectService, private route: ActivatedRoute) {
         this.respSearchResult = this.service.respSearchResult;
@@ -21,19 +24,42 @@ export class ObjectResponsibilityComponent {
             .queryParams
             .map(params => params.id)
             .flatMap((id) =>
-                this.elastic.searchInRespModel(id, 200)
+                this.elastic.searchInRespModel(id, this.countData)
             )
             .subscribe((item) => { 
                 this.respSearchResult = this.service.respSearchResult = this.sortData(item);
+                if(this.countData < elastic.respTotal)
+                    {this.moreData=true;
+                    this.respText='>>> Get all ' + elastic.respTotal + ' results (Warning: Hundreds results can slow down your browser!)';}
+                else{
+                    this.moreData=false;
+                    this.respText='>>> Get all ' + elastic.respTotal + ' results ...';
+                }
                 if(!item[0]){
                     this.service.setSearchLabel('NO DATA');
                 }
                 else{
+                    //console.log("ObjectResponsibilityComponent  ",item[0]._source.subject_name);
                     this.service.setSearchLabel(item[0]._source.subject_name);
-                }
+                    //this.service.emitSubjectSearch(item[0]._source.subject_name);
+            }
              });
         this.sortPropResp = this.service.sortPropResp;
         this.sortReverseResp = this.service.sortReverseResp;
+    }
+
+    private getMoreData() {
+        this.respText='Loading ...';
+        this.$respSearchResult = this.route
+            .queryParams
+            .map(params => params.id)
+            .flatMap((id) =>
+                this.elastic.searchInRespModel(id, this.countData)
+            )
+            .subscribe((item) => { this.respSearchResult = this.service.respSearchResult =  this.sortData(item);
+            this.moreData=false;
+            
+        });
     }
 
     private getSearchLabel(): boolean {
@@ -58,16 +84,16 @@ export class ObjectResponsibilityComponent {
         this.service.navigateToTab(itemType,itemId);
     }
 
-    private navigateToTabLink(tabLink,itemId): any  {
-        this.service.navigateToTabLink(tabLink,itemId);
+    private navigateToTabLink(tabLink,itemId, itemName?): any  {
+        this.service.navigateToTabLink(tabLink,itemId, itemName);
     }
 
     private navigateToPage(page): any  {
         this.service.navigateToPage(page);
     }
 
-    private updateGetUrl(systemId): any {
-        this.service.updateGetUrl(systemId);
+    private updateGetUrl(systemId, itemName?): any {
+        this.service.updateGetUrl(systemId, itemName);
     }
 
 

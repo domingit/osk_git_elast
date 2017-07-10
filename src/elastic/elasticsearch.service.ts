@@ -2,14 +2,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Response } from '@angular/http';
 import elasticsearch from 'elasticsearch';
+import { ObjectService } from "templates/object.service";
 
 @Injectable()
 export class ElasticSearchService {
 
-    public ES_uri: 'https://localhost';
+    public ES_uri: 'https://localhost/';
+    //public ES_uri: 'https://softec.sk';
     //IDP URI for getting info about account
     public account_url: 'https://idp.orange.sk/auth/realms/orange/account/?referrer=elastika';
     //URI for stabilization logout proces. otherwise application is trying to login again, because id is in URL
+    //public logout_redirect_uri: 'https://localhost/elastika/app/index.html';
     public logout_redirect_uri: 'https://localhost/elastika/app/index.html';
 
     private _client: elasticsearch.ClientInterface
@@ -52,11 +55,17 @@ export class ElasticSearchService {
 
   public allowedIndices;
   public allIndices;
+  public infraTotal;
+  public servTotal;
+  public prodTotal;
+  public respTotal;
 
-    constructor() {
+  //host: this.ES_uri,
+
+    constructor(private ObjectService: ObjectService) {
         this._client = elasticsearch.Client(
         {
-            host: this.ES_uri,
+            host: 'https://localhost/',
             maxRetries: 0,
             requestTimeout: 5000,
             apiVersion: '5.3' //, log: 'trace'
@@ -104,10 +113,11 @@ export class ElasticSearchService {
             }
           }
         }
+        return this.indexAliasesModel;
     }
 
   private _serverError(err: any) {
-        console.log('sever error:', err);
+        //console.log('sever error:', err);
         if(err instanceof Response) {
           return Observable.throw(err.json().error || 'backend server error');
         }
@@ -115,6 +125,7 @@ export class ElasticSearchService {
     }
 
   public suggest(val, index?) : any {
+      //console.log("suggest");
       var indices = this.setAllowedIndices();
       if(indices.length>0){
        return Observable.fromPromise(this._client.search({
@@ -199,9 +210,7 @@ export class ElasticSearchService {
 		    }
 		}
        }
-        }))/*.do(
-            (resp) => console.log((<any>resp).hits.hits)
-        )*/
+        }))
         .map(
             (resp) => { 
                 return (<any>resp).hits.hits;
@@ -216,6 +225,7 @@ export class ElasticSearchService {
     };
 
     public getObjectById = function (val) {
+        //console.log("getObjectById");
         this.id = val;
         let index = this.getAllIndices();
         return Observable.fromPromise(this._client.search({
@@ -236,6 +246,7 @@ export class ElasticSearchService {
     };    
 
      public searchInInfraModel = function (val, size) {
+        //console.log("searchInInfraModel");
         var index = "alias_system_instance_servers";
         this.infraModelId = val;
         //console.log(val);
@@ -262,6 +273,7 @@ export class ElasticSearchService {
         return this.infraSearchResult
         .map(
             (resp) => { 
+                this.infraTotal = resp.hits.total;
                 return (<any>resp).hits.hits;
             }
         )
@@ -269,6 +281,7 @@ export class ElasticSearchService {
     };
 
     public searchInProdModel = function (val, size) {
+        //console.log("searchInProdModel");
         var index = "alias_product_services";
         this.prodModelId = val;
         if(this.prod_id!=val)
@@ -291,6 +304,7 @@ export class ElasticSearchService {
             }
         return this.prodSearchResult.map(
             (resp) => { 
+                this.prodTotal = resp.hits.total;
                 return (<any>resp).hits.hits;
             }
         )
@@ -298,6 +312,7 @@ export class ElasticSearchService {
     };
 
     public searchInServModel = function (val, size) {
+        //console.log("searchInServModel");
         var index = "alias_service_process_systems";
         this.servModelId = val;
         if(this.serv_id!=val)
@@ -322,6 +337,7 @@ export class ElasticSearchService {
             }
         return this.servSearchResult.map(
             (resp) => { 
+                this.servTotal = resp.hits.total;
                 return (<any>resp).hits.hits;
             }
         )
@@ -329,6 +345,7 @@ export class ElasticSearchService {
     };
 
     public searchInRespModel = function (val, size) {
+        //console.log("searchInRespModel");
         var index = "alias_responsibilities";
         this.respModelId = val;
         if(this.resp_id!=val)
@@ -351,6 +368,7 @@ export class ElasticSearchService {
             }
         return this.respSearchResult.map(
             (resp) => { 
+                this.respTotal = resp.hits.total;
                 return (<any>resp).hits.hits;
             }
         )

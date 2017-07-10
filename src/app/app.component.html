@@ -18,41 +18,58 @@
             </div>-->
             <div class=" navbar-brand demo-menu menu-button">
                 <div md2-menu class="menu-button" x-position="above" y-position="before">
-                    <button button="primary" [disabled]=!signedIn md2-menu-trigger class="morph pic menu-button" style="font-size: 23px; color: rgb(255, 255, 255); background-color: rgb(47, 108, 154); height: 38px; width: 38px; line-height: 39px; border-radius: 50%; overflow: hidden; text-align: center; position: static; top: 90px; z-index: 2; text-shadow: rgb(33, 76, 108) 0px 0px, rgb(35, 80, 114) 1px 1px, rgb(37, 85, 121) 2px 2px, rgb(39, 89, 128) 3px 3px, rgb(41, 94, 134) 4px 4px, rgb(43, 99, 141) 5px 5px, rgb(45, 103, 147) 6px 6px;">
+                <button button="primary" [disabled]=!signedIn md2-menu-trigger class="morph pic menu-button" style="font-size: 23px; color: rgb(255, 255, 255); background-color: rgb(47, 108, 154); height: 38px; width: 38px; line-height: 39px; border-radius: 50%; overflow: hidden; text-align: center; position: static; top: 90px; z-index: 2; text-shadow: rgb(33, 76, 108) 0px 0px, rgb(35, 80, 114) 1px 1px, rgb(37, 85, 121) 2px 2px, rgb(39, 89, 128) 3px 3px, rgb(41, 94, 134) 4px 4px, rgb(43, 99, 141) 5px 5px, rgb(45, 103, 147) 6px 6px;">
                         <i id="icon" class="fa fa-tasks" style="font-size: 23px; color: rgb(255, 255, 255); background-color: rgb(47, 108, 154); height: 38px; width: 38px; line-height: 39px; border-radius: 50%; overflow: hidden; text-align: center; position: static; top: 90px; z-index: 2; text-shadow: rgb(33, 76, 108) 0px 0px, rgb(35, 80, 114) 1px 1px, rgb(37, 85, 121) 2px 2px, rgb(39, 89, 128) 3px 3px, rgb(41, 94, 134) 4px 4px, rgb(43, 99, 141) 5px 5px, rgb(45, 103, 147) 6px 6px;"></i>
                     </button>
-                    <!--<span button="primary"  md2-menu-trigger class="morph pic menu-button" style="font-size: 23px; color: rgb(255, 255, 255); background-color: rgb(47, 108, 154); height: 38px; width: 38px; line-height: 39px; border-radius: 50%; overflow: hidden; text-align: center; position: static; top: 90px; z-index: 2; text-shadow: rgb(33, 76, 108) 0px 0px, rgb(35, 80, 114) 1px 1px, rgb(37, 85, 121) 2px 2px, rgb(39, 89, 128) 3px 3px, rgb(41, 94, 134) 4px 4px, rgb(43, 99, 141) 5px 5px, rgb(45, 103, 147) 6px 6px;">
-                       <i id="icon" class="fa fa-tasks" style="font-size: 23px; color: rgb(255, 255, 255); background-color: rgb(47, 108, 154); height: 38px; width: 38px; line-height: 39px; border-radius: 50%; overflow: hidden; text-align: center; position: static; top: 90px; z-index: 2; text-shadow: rgb(33, 76, 108) 0px 0px, rgb(35, 80, 114) 1px 1px, rgb(37, 85, 121) 2px 2px, rgb(39, 89, 128) 3px 3px, rgb(41, 94, 134) 4px 4px, rgb(43, 99, 141) 5px 5px, rgb(45, 103, 147) 6px 6px;"></i>
-                    </span>-->
-                    <div md2-menu-content class = "menu-content">
-                        <button type="button" md2-menu-item (click)="profile.show()">My account</button>
-                        <button type="button" md2-menu-item (click)="options.show()" data-toggle="modal" title="You can choose which types of data are taken into account for search" data-target=".bs-example-modal-lg">Settings</button>
-                        <button type="button" md2-menu-item (click)="links.show()">Links</button>
-                        <a target="_blank" href="https://plazza.orange.com/groups/architecture/projects/elastika-project" md2-menu-item>News</a>
-                        <button type="button" md2-menu-item (click)="contants.show()">Contacts</button>
-                        <button type="button" md2-menu-item (click)="about.show()">About</button>
-                        <button type="button" md2-menu-item (click)="signOut()">Sign out</button>
+                        <div md2-menu-content class="menu-content">
+                            <a target="_blank" class="menu-item" (click)="navigateHome()" md2-menu-item>
+                                <i id="icon" class="fa fa-fw fa-tasks"></i>Elastika
+                            </a>
+                            <a type="button" md2-menu-item class="menu-item" (click)="profile.show()">
+                                <i class="fa fa-fw fa-user-o"></i>My account
+                            </a>
+                            <a type="button" md2-menu-item class="menu-item" (click)="options.show()" data-toggle="modal" title="You can choose which types of data are taken into account for search" data-target=".bs-example-modal-lg">
+                                <i class="fa fa-fw fa-cog"></i>Settings
+                            </a>
+                            <a type="button" md2-menu-item class="menu-item" (click)="links.show()">
+                                <i class="fa fa-fw fa-link"></i>Links
+                            </a>
+                            <a target="_blank" class="menu-item" href="https://plazza.orange.com/groups/architecture/projects/elastika-project" md2-menu-item>
+                                <i class="fa fa-fw fa-fire"></i>News
+                            </a>
+                            <a type="button" md2-menu-item class="menu-item" (click)="contants.show()">
+                                <i class="fa fa-fw fa-phone"></i>Contacts
+                            </a>
+                            <a type="button" md2-menu-item class="menu-item" (click)="about.show()">
+                                <i class="fa fa-fw fa-info"></i>About
+                            </a>
+                            <a type="button" md2-menu-item class="menu-item" (click)="signOut()">
+                                <i class="fa fa-fw fa-sign-out"></i>Sign out
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <button type="button" class="btn btn-primary sign-button" [hidden]="signedIn" title="Sign in" (click)="signIn()">
-                Sign in</button>
+                <!--<button type="button" class="btn btn-primary sign-button" [hidden]="signedIn" title="Sign in" (click)="signIn()">
+                Sign in</button>-->
             </div>
             <div class="typeahead">
                 <ngbd-typeahead-template></ngbd-typeahead-template>
             </div>
 
-            <button type="button" (click)="login()">LOGIN</button>
+            <!--<button type="button" (click)="login()">LOGIN</button>-->
 
     </div>
 </nav>
 
-<div>
-    <object-body></object-body>  
-</div>
+<div class="container-fluid">
+
+    <div>
+        <object-body></object-body>  
+    </div>
+
 
 <footer-elastika></footer-elastika>
 
-  <app-modal #options [showHeader]="true" tabindex="-1">
+ <app-modal #options [showHeader]="true" [showFooter]="true" tabindex="-1">
     <div class="app-modal-header">
       <h4 class="modal-title" id="myModalLabel">Choose indices for search</h4>
     </div>
@@ -103,6 +120,8 @@
         <news-body></news-body>
     </div>
 </app-modal>
+
+</div>
 
 <script type="text/javascript">
     $(document).ready(function () {

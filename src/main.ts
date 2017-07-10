@@ -10,8 +10,8 @@ if (environment.production) {
 }
 
 //KeycloakService.init()
-//  .then(() => {
+  //.then(() => {
     const platform = platformBrowserDynamic();
     platform.bootstrapModule(AppModule);
-//  })
+  //})
   //.catch(() => window.location.reload());

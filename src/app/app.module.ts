@@ -33,19 +33,21 @@ import { NewsComponent }        from '../footer/news.component';
 import { NgbdTypeaheadTemplate } from './typeahead-basic';
 import { KeycloakService }      from './keycloak.service';
 import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
+import { ModalService }         from '../modal_window/modal.service';
+import { CustomHttp }      from './http.service';
 
 //import { CookieModule } from 'ngx-cookie';
 //import { MaterialModule } from '@angular/material';
 import { Md2Module }  from 'md2';
 //import { Ng2KeycloakModule } from '@ebondu/angular2-keycloak';
 
-export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+/*export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
     tokenName: 'token',
     tokenGetter: (() => KeycloakService.auth.authz.token),
     globalHeaders: [{ 'Content-Type': 'application/json' }],
   }), http, options);
-}
+}*/
 
 @NgModule({
   declarations: [
@@ -85,11 +87,18 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ElasticSearchService, 
     ObjectService, 
     KeycloakService,
-    {
+    ModalService,
+    /*{
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,
       deps: [Http, RequestOptions]
-    }],
+    },*/
+    {
+      provide: Http,
+      useClass: CustomHttp
+    }
+    
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

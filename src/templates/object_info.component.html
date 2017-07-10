@@ -1,6 +1,7 @@
 <div>
 <div *ngIf="getSearchLabel()" class="container-fluid">
-    <div *ngIf="getSearchLabel()" class="row">
+    <div *ngIf="getSearchLabel()" class="panel-body-corr">
+        <!--<div *ngIf="getSearchLabel()" class="row">-->
         <div *ngIf="item?._source">
             <ul class="list-group">
                 <li class="list-group-item">
@@ -12,7 +13,7 @@
                                                 <!--<img style="max-width:72px; max-height:96px; border-radius: 6px;" ng-src="{{$item._source.photoURL}}" alt="Photo"/>-->
                                 </p>
                                 <p style="margin-top: 5px;" class="list-group-item-text">
-                                <a (click)="navigateToTab(item._type,item._id)">
+                                <a (click)="navigateToTab(item._type,item._id, item._source.name)">
                                 {{item._source.name}}
                                                     <span *ngIf="item._source.login">({{item._source.login}})</span>
                                     </a>
@@ -34,7 +35,6 @@
                         <strong>ID: </strong>
                         <span *ngIf="item._source.inv_url">
                             <a target="_blank" (click)="navigateToPage(item._source.inv_url)">{{item._id}}</a>
-                            <!--<a target="_blank" (click)="{{item._source.inv_url}}">{{item._id}}</a>-->
                         </span>
                         <span *ngIf="!item._source.inv_url">{{item._id}}</span>
                     </p>

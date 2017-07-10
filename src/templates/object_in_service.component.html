@@ -1,4 +1,7 @@
-        <div class="table-responsive" *ngIf="servSearchResult">
+ <div>
+<div *ngIf="servSearchResult" class="container-fluid"> 
+        <div class="table-responsive table-body-corr" *ngIf="servSearchResult">
+        <!--<div class="table-responsive" *ngIf="servSearchResult">-->
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -76,7 +79,6 @@
                     </th>
                 </tr>
                 </thead>
-                <div *ngIf="servSearchResult.length==0">No data found</div>
                 <tbody>
                 <tr *ngFor="let item of servSearchResult"><!-- | orderBy:'_source.'+sortPropServ: sortReverseServ">-->
                     <td class="hidden-xs">
@@ -90,12 +92,12 @@
                     <td>
                         <span *ngIf="item._source.service_name">
                             <span class="fa fa-info-sign"></span>
-                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.service_id)">
+                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.service_id, item._source.service_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
                             <span *ngIf="item._source.service_id == id"
                                   [innerHTML]="item._source.service_name "></span>
-                            <a *ngIf="item._source.service_id != id" (click)="updateGetUrl(item._source.service_id)">
+                            <a *ngIf="item._source.service_id != id" (click)="updateGetUrl(item._source.service_id, item._source.service_name)">
                                
                                 <span [innerHTML]="item._source.service_name "></span>
                             </a>
@@ -107,12 +109,12 @@
                     </td>
                     <td class="hidden-xs">
                         <span *ngIf="item._source.process_name">
-                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.process_id)">
+                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.process_id, item._source.process_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
                             <span *ngIf="item._source.process_id == id"
                                   [innerHTML]="item._source.process_name"></span>
-                            <a *ngIf="item._source.process_id != id" (click)="updateGetUrl(item._source.process_id)">
+                            <a *ngIf="item._source.process_id != id" (click)="updateGetUrl(item._source.process_id, item._source.process_name)">
                                
                                 <span [innerHTML]="item._source.process_name"></span>
                             </a>
@@ -123,12 +125,12 @@
                             <span [innerHTML]="item._source.process_interface"></span>
                         </span>
                         <span *ngIf="item._source.process_interface != 'direct'">
-                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.procitf_id)">
+                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.procitf_id, item._source.process_interface)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
                             <span *ngIf="item._source.procitf_id == id"
                                   [innerHTML]="item._source.process_interface"></span>
-                            <a *ngIf="item._source.procitf_id != id" (click)="updateGetUrl(item._source.procitf_id)">
+                            <a *ngIf="item._source.procitf_id != id" (click)="updateGetUrl(item._source.procitf_id, item._source.process_interface)">
                                
                                 <span [innerHTML]="item._source.process_interface "></span>
                             </a>
@@ -140,23 +142,28 @@
                     </td>
                     <td>
                         <span *ngIf="item._source.object_name">
-                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.object_id)">
+                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.object_id, item._source.object_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
                             <span *ngIf="item._source.object_id == id"
                                   [innerHTML]="item._source.object_name "></span>
-                            <a *ngIf="item._source.object_id != id" (click)="updateGetUrl(item._source.object_id)">
+                            <a *ngIf="item._source.object_id != id" (click)="updateGetUrl(item._source.object_id, item._source.object_name)">
                                
                                 <span [innerHTML]="item._source.object_name "></span>
                             </a>
                         </span>
                     </td>
-                    <!--td [innerHTML]="item._source.responsible_engineer+' ('+item._source.responsible_engineer_login+')' | uibTypeaheadHighlight"></td-->
+                    <!--td [innerHTML]="item._source.responsible_engineer+' ('+item._source.responsible_engineer_login+')' "></td-->
+                </tr>
+                <tr *ngIf="servSearchResult">
+                    <td colspan = "7" *ngIf="servSearchResult.length==0">No data found</td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <!--<div *ngIf="$servSearchResult.length < servResultTotal" class="panel-footer">
-            <!--<a href="" (click)="servGetText='Loading ...';searchInServModel(id, 10000);" [innerHTML]="servGetText"></a>
-        </div>-->
+        <div *ngIf="moreData" class="panel-footer">
+            <a (click)="getMoreData();" [innerHTML]="servText">{{servText}}</a>
+        </div>
 
+</div>
+ </div>

@@ -1,15 +1,16 @@
-<table>
+<table *ngIf = "user">
     <tr>
         <td>
             <img style="max-width: 72px; max-height: 96px; border-radius: 6px; margin-left: -5px; margin-right: 5px;" ng-show="signedIn" alt="Photo"/> <!--photo-->
         </td>
         <td>
-            <!--<strong>{{user.name}}</strong>
-            <div>{{user.email}}</div>-->
-            <strong>Martin</strong>
-            <div>martin@martin.sk</div>
+            <strong>{{user.name}}</strong>
+            <div>{{user.email}}</div>
+            <!--<strong>Martin</strong>
+            <div>martin@martin.sk</div>-->
             <br>
             <div [hidden]="!signedIn" class="right"><label class="btn btn-primary" (click)="accountInfo()">My account</label></div>
         </td>
     </tr>
 </table>
+<span *ngIf = "!user"> You are not signed in!</span>

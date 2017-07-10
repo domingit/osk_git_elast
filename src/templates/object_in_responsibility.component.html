@@ -1,4 +1,7 @@
-        <div class="table-responsive" *ngIf="respSearchResult">
+ <div>
+<div *ngIf="respSearchResult" class="container-fluid"> 
+        <div class="table-responsive table-body-corr" *ngIf="respSearchResult">
+        <!--<div class="table-responsive" *ngIf="respSearchResult"> -->
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -40,18 +43,16 @@
                     </th>
                 </tr>
                 </thead>
-                <div *ngIf="respSearchResult.length==0">No data found</div>
                 <tbody>
                 <tr *ngFor="let item of respSearchResult">
                     <td>
                         <span *ngIf="item._source.object_name">
-                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.object_id)">
+                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.object_id, item._source.object_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
                             <span *ngIf="item._source.object_id == id"
                                   [innerHTML]="item._source.object_name"></span>
-                            <!--a *ngIf="item._source.object_id != id" href="" (click)="updateGetUrl(tem._source.object_id);setSearchLabel(item._source.object_name);searchInRespModel(item._source.object_id,10);"-->
-                            <a *ngIf="item._source.object_id != id" (click)="updateGetUrl(item._source.object_id);">
+                            <a *ngIf="item._source.object_id != id" (click)="updateGetUrl(item._source.object_id, item._source.object_name);">
                                 <span *ngIf="item._source.object_name"
                                       [innerHTML]="item._source.object_name"></span>
                             </a>
@@ -67,13 +68,12 @@
                     </td>
                     <td>
                         <span *ngIf="item._source.subject_name">
-                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.subject_id)">
+                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.subject_id, item._source.subject_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
                             <span *ngIf="item._source.subject_id == id"
                                   [innerHTML]="item._source.subject_name"></span>
-                            <!--a *ngIf="item._source.subject_id != id" href="" (click)="updateGetUrl(tem._source.subject_id);setSearchLabel(item._source.subject_name);searchInRespModel(item._source.subject_id,10);"-->
-                            <a *ngIf="item._source.subject_id != id" (click)="updateGetUrl(item._source.subject_id)">
+                            <a *ngIf="item._source.subject_id != id" (click)="updateGetUrl(item._source.subject_id, item._source.subject_name)">
                                 <span *ngIf="item._source.subject_name"
                                       [innerHTML]="item._source.subject_name"></span>
                             </a>
@@ -81,9 +81,14 @@
                     </td>
                     <!--td [innerHTML]="item._source.responsible_engineer+' ('+item._source.responsible_engineer_login+')'"></td-->
                 </tr>
+                <tr *ngIf="respSearchResult">
+                    <td colspan = "7" *ngIf="respSearchResult.length==0">No data found</td>
+                </tr>
                 </tbody>
             </table>
         </div>
-        <!--<div *ngIf="respSearchResult.length < respResultTotal" class="panel-footer">
-            <a href="" (click)="respGetText='Loading ...';searchInRespModel(id, 10000);" [innerHTML]="respGetText"></a>
-        </div>-->
+        <div *ngIf="moreData" class="panel-footer">
+            <a (click)="getMoreData();" [innerHTML]="respText">{{respText}}</a>
+        </div>
+</div>
+</div>

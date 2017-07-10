@@ -1,6 +1,8 @@
 <!--<div ng-init="initializeInfraModelTab(10)"></div>-->
-
-        <div class="table-responsive" *ngIf="infraSearchResult">
+ <div>
+<div *ngIf="infraSearchResult" class="container-fluid"> 
+        <div class="table-responsive table-body-corr" *ngIf="infraSearchResult">
+        <!--<div class="table-responsive" *ngIf="infraSearchResult">-->
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -78,19 +80,18 @@
                     </th>
                 </tr>
                 </thead>
-                <div *ngIf="infraSearchResult.length==0">No data found</div>
                 <tbody>
                     
                 <tr *ngFor="let item of infraSearchResult">
                     <td>
                         <span *ngIf="item._source.system_name">
-                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.aris_system_id)">
+                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.aris_system_id,item._source.system_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
                             <span *ngIf="item._source.aris_system_id == id"
                                   [innerHTML]="item._source.system_name"></span>
-                            <a *ngIf="item._source.aris_system_id != id" (click)="updateGetUrl(item._source.aris_system_id);"
-                               (click)="navigateToTabLink('/object/inframodel',item._source.aris_system_id)">
+                            <a *ngIf="item._source.aris_system_id != id" (click)="updateGetUrl(item._source.aris_system_id,item._source.system_name);"
+                               (click)="navigateToTabLink('/object/inframodel',item._source.aris_system_id,item._source.system_name)">
                                 <span [innerHTML]="item._source.system_name"></span>
                             </a>
                         </span>
@@ -101,13 +102,13 @@
                     </td>
                     <td class="hidden-xs">
                         <span *ngIf="item._source.consists_of_name">
-                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.ngi_consists_of_id)">
+                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.ngi_consists_of_id,item._source.consists_of_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
                             <span *ngIf="item._source.ngi_consists_of_id == id"
                                   [innerHTML]="item._source.consists_of_name"></span>
-                            <a *ngIf="item._source.ngi_consists_of_id != id" (click)="updateGetUrl(item._source.ngi_consists_of_id);"
-                               (click)="navigateToTabLink('/object/inframodel',item._source.ngi_consists_of_id)">
+                            <a *ngIf="item._source.ngi_consists_of_id != id" (click)="updateGetUrl(item._source.ngi_consists_of_id,item._source.consists_of_name);"
+                               (click)="navigateToTabLink('/object/inframodel',item._source.ngi_consists_of_id,item._source.consists_of_name)">
                                 <span [innerHTML]="item._source.consists_of_name"></span>
                             </a>
                             <span style="color:#aaa;font-style: italic;" *ngIf="item._source.consists_of_type"
@@ -120,13 +121,13 @@
                     </td>
                     <td class="hidden-xs">
                         <span *ngIf="item._source.depends_on_name">
-                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.ngi_depends_on_id)">
+                            <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.ngi_depends_on_id,item._source.depends_on_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
                             <span *ngIf="item._source.ngi_depends_on_id == id"
                                   [innerHTML]="item._source.depends_on_name"></span>
-                            <a *ngIf="item._source.ngi_depends_on_id != id" (click)="updateGetUrl(item._source.ngi_depends_on_id);"
-                               (click)="navigateToTabLink('/object/inframodel',item._source.ngi_depends_on_id)">
+                            <a *ngIf="item._source.ngi_depends_on_id != id" (click)="updateGetUrl(item._source.ngi_depends_on_id,item._source.depends_on_name);"
+                               (click)="navigateToTabLink('/object/inframodel',item._source.ngi_depends_on_id,item._source.depends_on_name)">
                                 <span [innerHTML]="item._source.depends_on_name"></span>
                             </a>
                             <span style="color:#aaa;font-style: italic;" *ngIf="item._source.depends_on_type"
@@ -146,23 +147,28 @@
                         </span>
                     </td>
                     <td>
-                        <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.ngi_runs_on_id)">
+                        <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.ngi_runs_on_id, item._source.runs_on_name)">
 			            <i class="pulse fa fa-info-circle fa-lg"></i>
                         </a>
                         <span *ngIf="item._source.runs_on_name">
                             <span *ngIf="item._source.ngi_runs_on_id == id"
                                   [innerHTML]="item._source.runs_on_name"></span>
-                            <a *ngIf="item._source.ngi_runs_on_id != id" (click)="updateGetUrl(item._source.ngi_runs_on_id);"
-                               (click)="navigateToTabLink('/object/inframodel',item._source.ngi_runs_on_id)">
+                            <a *ngIf="item._source.ngi_runs_on_id != id" (click)="updateGetUrl(item._source.ngi_runs_on_id, item._source.runs_on_name);"
+                               (click)="navigateToTabLink('/object/inframodel',item._source.ngi_runs_on_id, item._source.runs_on_name)">
                                 <span [innerHTML]="item._source.runs_on_name"></span>
                             </a>
                         </span>
                     </td>
                     <!--td [innerHTML]="item._source.responsible_engineer+' ('+item._source.responsible_engineer_login+')'"></td-->
                 </tr>
+                <tr *ngIf="infraSearchResult">
+                    <td colspan = "7" *ngIf="infraSearchResult.length==0">No data found</td>
+                </tr>
                 </tbody>
             </table>
         </div>
-        <!--<div *ngIf="infraSearchResult.length < infraResultTotal" class="panel-footer">
-            <a href="" (click)="infraGetText='Loading ...';searchInInfraModel(id, 10000);" [innerHTML]="infraGetText"></a>
-        </div>-->
+        <div *ngIf="moreData" class="panel-footer">
+            <a (click)="getMoreData();" [innerHTML]="infraText">{{infraText}}</a>
+        </div>
+        </div>
+        </div>

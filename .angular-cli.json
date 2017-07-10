@@ -22,7 +22,7 @@
         "styles.css",
         "../node_modules/font-awesome/css/font-awesome.css"
       ],
-      "scripts": ["keycloak.js"],
+      "scripts": ["./keycloak.js"],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
@@ -53,6 +53,10 @@
   },
   "defaults": {
     "styleExt": "css",
-    "component": {}
+    "component": {},
+    "serve": {
+      "port": 4444,
+      "host": "0.0.0.0"
+    }
   }
 }

@@ -1,4 +1,7 @@
+
 import {Component, Input} from '@angular/core';
+import { ModalService } from './modal.service';
+import { ObjectService } from "templates/object.service";
 
 
 @Component({
@@ -9,15 +12,29 @@ import {Component, Input} from '@angular/core';
 export class ModalComponent {
 
   @Input() showHeader:any;
+  @Input() showFooter:any;
 
   public visible = false;
   private visibleAnimate = false;
 
-  constructor(){}
+  constructor(private service: ModalService, private objectService: ObjectService) {
+    this.visible = false;
+    this.visibleAnimate = false;
+    this.objectService.signn$
+          .subscribe(
+                (
+                  modal) => {this.visible = !modal;
+                  this.visibleAnimate = !modal;
+                }
+    );
+  }
+
 
   public show(): void {
     this.visible = true;
     setTimeout(() => this.visibleAnimate = true, 100);
+    //this.visible = this.service.show();
+    //setTimeout(() => this.visibleAnimate = this.service.show(), 100);
   }
 
   public hide(): void {
@@ -29,6 +46,10 @@ export class ModalComponent {
     if ((<HTMLElement>event.target).classList.contains('modal')) {
       this.hide();
     }
+  }
+
+  public close(): void {
+      this.hide();
   }
 
 }

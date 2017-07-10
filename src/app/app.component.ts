@@ -19,79 +19,69 @@ export class AppComponent implements OnInit{
   signedIn = true;
   searchText='';
   indexAliasesModel : any;
+  authz : any;
 
   constructor(public http: Http, private elastic: ElasticSearchService, private objectService: ObjectService, private kc: KeycloakService) {
     this.searchText = this.objectService.searchText;
     this.signedIn = this.objectService.signedIn;
-
-    if(localStorage.getItem("ES_index_aliases") !== undefined){
+    this.indexAliasesModel = this.setIndices(['default']);
+    //console.log(localStorage.getItem("ES_index_aliases"));
+    /*if(localStorage.getItem("ES_index_aliases")!='null' && localStorage.getItem("ES_index_aliases")!='undefined'){
         this.indexAliasesModel = this.elastic.indexAliasesModel = JSON.parse(localStorage.getItem("ES_index_aliases"));
     } else {
-        this.setIndices(['default']);
-    }
+        this.indexAliasesModel = this.setIndices(['default']);
+    }*/
   }
   ngOnInit(){
+      //console.log("user Info  ", this.kc.getUserInfo());
+      this.authz = this.kc.getUserInfo();
+      if (this.authz){
+          this.signedIn=!this.authz.loggedIn;
+          //console.log("sign  ", this.signedIn);
+          this.objectService.signedIn = this.signedIn;
+          this.objectService.emitSubjectSign(this.signedIn);
+          this.objectService.emitSubjectAuth(this.authz);
+          //console.log("sign on init ",this.objectService.signedIn);
+          //console.log(this.authz);
+      }
   }
 
   logout() {
     this.kc.logout();
   }
 
-  login() {
-    this.kc.login();
-  }
-
-  /*ngOnChanges(indexAliasesModel) {
-      console.log("changes");
-      console.log(indexAliasesModel);
-  }*/
-
   setIndices(index){
-        this.elastic.setIndices(index);
+        return this.elastic.setIndices(index);;
     }
 
-  onChange(atribut){
-    /*console.log(atribut);
-    this.helpvalue = this.elastic.suggest(this.filter, this.indexAlowed());
-    console.log(this.optionsModel);*/
-  }
 
   toggleState() {
         let bool = this.isIn;
         this.isIn = bool === false ? true : false;
   }
 
-    /*setSearchLabel (val) {
-        console.log("setSearchLabel");
-        this.config.query = val;
-        this.config.label = val;
-    };*/
-
-    /*getSearchLabel = function () {
-        /*console.log("getSearchLabel");*/
-        /*return this.config.label;
-    };*/
-
   getMeInfo = function () {
-        console.log("getMeInfo");
+        //console.log("getMeInfo");
         this.updateGetUrl('00000865');
         this.id = '00000865';
         this.initializeInfoTab();
   }
 
     signIn = function(){
-        console.log("signIn");
+        //console.log("signIn");
+        this.kc.auth.authz.login();
         //auth.authz.login();
     }
 
-    signOut (){
-        console.log("signOut");
+    signOut = function(){
+        //console.log("signOut");
+        this.kc.signOut({redirectUri: this.objectService.logout_redirect_uri});
+        //this.kc.auth.authz.logout({redirectUri: this.objectService.logout_redirect_uri});
         //auth.authz.logout({redirectUri: myConfig.logout_redirect_uri});
     }
 
-    accountInfo(){
-        console.log("accountInfo");
-	//window.location.href = config.account_url;
+    navigateHome(){
+      this.objectService.navigateToHome();
     }
 
 

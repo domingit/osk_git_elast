@@ -2,13 +2,13 @@
     color: white !important;
     padding-left: 5px !important;
     padding-right: 5px !important;
-    background-color: #1f71b5;
+    background-color: #035294;
     /*border-color: #105c9c;*/
 }
 
 .pillsText.a {
     color: white !important;
-    padding-left: 5px !important;
+    padding-left: 0px !important;
     padding-right: 5px !important;
 }
 
@@ -21,6 +21,11 @@
 .pillsText:active{
     color: #337ab7 !important;
     background-color: white;
+}
+
+.nav-pills {
+    border: 1px solid #337ab7;
+    border-radius: 5px
 }
 
 
@@ -36,11 +41,12 @@
 .panel-heading {
     padding-bottom: 0px !important;
     padding-right: 0px !important;
+    padding-top: 2px !important;
 }
 
 .panel-title {
     position: absolute;
-    margin-top: 5px !important;
+    margin-top: 10px !important;
 }
 
 .navcorrect {
@@ -49,8 +55,12 @@
 
 .tabscorrect {
     padding-left: 5px !important;
-    padding-right: 5px !important;
+    margin-right: 5px !important;
 }
+
+/*.panel {
+    padding: 15px;
+}*/
 
 .tabright {
     padding-right: 10px !important;

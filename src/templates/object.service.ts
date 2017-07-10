@@ -17,15 +17,32 @@ export class ObjectService {
     public prod_id;
     public servSearchResult;
     public serv_id;
-    public signedIn = true;
+    public signedIn;
     public searchText='';
     public account_url: 'https://idp.orange.sk/auth/realms/orange/account/?referrer=elastika';
     public logout_redirect_uri: 'https://elastika.fe.sun.orange.sk/elastika/app/index.html';
     public ES_uri: 'https://localhost';
 
+    private _signSubject = new Subject<boolean>();
+    public signn$ = this._signSubject.asObservable();
+    public emitSubjectSign = (signn: boolean) => this._signSubject.next(signn);
+
+    private _authSubject = new Subject<any>();
+    public auth$ = this._authSubject.asObservable();
+    public emitSubjectAuth = (auth: any) => this._authSubject.next(auth);
+
+    private _modalSubject = new Subject<any>();
+    public modal$ = this._modalSubject.asObservable();
+    public emitSubjectModal = (modal: any) => this._modalSubject.next(modal);
+
+    private _searchSubject = new Subject<any>();
+    public searchName$ = this._searchSubject.asObservable();
+    public emitSubjectSearch = (searchName: any) => this._searchSubject.next(searchName);
+
+
     private _typeSubject = new Subject<string>();
     public type$ = this._typeSubject.asObservable();
-    public emitSubject = (type: string) => this._typeSubject.next(type)
+    public emitSubject = (type: string) => this._typeSubject.next(type);
 
     public sortPropResp = 'subject_name';
     public sortPropServ = 'service_name';
@@ -84,11 +101,28 @@ export class ObjectService {
   }
 
     constructor(private _router: Router, @Inject(DOCUMENT) private document: any){
+        //console.log("this.signedIn ", this.signedIn);
+        if (this.signedIn != true || this.signedIn != true)
+        {
+            this.signedIn = true;
+        }
+
         if(this.signedIn){
             this.searchText = "Start typing something to search...";
         } else{
             this.searchText = "You are not signed in !!!!"
         }
+
+        //console.log("this.sssssssssssssssssss ", this.signedIn);
+    }
+
+    public getPlaceholder(signed) {
+        if(signed){
+            this.searchText = "Start typing something to search...";
+        } else{
+            this.searchText = "You are not signed in !!!!"
+        }
+        return this.searchText;
     }
 
     public sortByProperty(property, asc) {
@@ -103,12 +137,22 @@ export class ObjectService {
     };
 
 
-    public navigateToTab(itemType,itemId): any  {
+    public navigateToTab(itemType,itemId,itemName?): any  {
+        if(itemName){
+            this.emitSubjectSearch(itemName);
+        }
         this._router.navigate([this.navigateTitle[itemType.replace(' ','_')]], {queryParams: {id: itemId}});
     }
 
-    public navigateToTabLink(tabLink,itemId): any  {
+    public navigateToTabLink(tabLink,itemId,itemName?): any  {
+        if(itemName){
+            this.emitSubjectSearch(itemName);
+        }
         this._router.navigate([tabLink], {queryParams: {id: itemId}});
+    }
+
+    public navigateToHome(): any  {
+        this._router.navigate(['/main']);
     }
 
     public navigateToPage(page): any  {
@@ -119,13 +163,16 @@ export class ObjectService {
         this._router.ngOnDestroy();
         //window.location.href=page; 
 
-        console.log("page  ", this.account_url);
+        //console.log("page  ", this.account_url);
         if(page='account') {
             this.document.location.href ='https://idp.orange.sk/auth/realms/orange/account/?referrer=elastika';
         }
     }
 
-    public updateGetUrl(systemId): any {
+    public updateGetUrl(systemId, itemName?): any {
+        if(itemName){
+            this.emitSubjectSearch(itemName);
+        }
         this._router.navigate([this._router.url.split('?')[0]], {queryParams: {id: systemId}});
     }
 

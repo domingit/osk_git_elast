@@ -33,7 +33,9 @@ export class ObjectInfoComponent{
                 this.service.setSearchLabel('NO DATA');
             }
             else{
+                //console.log("resp  ",item[0]._source.name);
                 this.service.setSearchLabel(item[0]._source.name);
+                this.service.emitSubjectSearch(item[0]._source.name);
             }
              });
         this.sortPropResp = this.service.sortPropResp;
@@ -46,12 +48,12 @@ export class ObjectInfoComponent{
         return true;
     }
 
-    private navigateToTab(itemType,itemId): any  {
-        this.service.navigateToTab(itemType,itemId);
+    private navigateToTab(itemType,itemId, itemName?): any  {
+        this.service.navigateToTab(itemType,itemId,itemName);
     }
 
-    private navigateToTabLink(tabLink,itemId): any  {
-        this.service.navigateToTabLink(tabLink,itemId);
+    private navigateToTabLink(tabLink,itemId, itemName?): any  {
+        this.service.navigateToTabLink(tabLink,itemId, itemName);
     }
 
     private navigateToPage(page): any  {

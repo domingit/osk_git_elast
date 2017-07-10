@@ -13,27 +13,54 @@ export class ObjectServiceComponent{
     servSearchResult: any;
     sortPropServ = '';
     sortReverseServ = false;
+    countData = 200;
+    moreData = false;
+    servText:any;
+
 
     constructor(private _router: Router, private elastic: ElasticSearchService, private service: ObjectService, private route: ActivatedRoute) {
-        console.log("TU",this.service.selectedItemId);
+        //console.log("TU",this.service.selectedItemId);
         this.$servSearchResult = this.route
             .queryParams
             .map(params => params.id)
             .flatMap((id) =>
-                this.elastic.searchInServModel(id, 200)
+                this.elastic.searchInServModel(id, this.countData)
             )
             .subscribe((item) => { this.servSearchResult = this.sortData(item);
+            if(this.countData < elastic.servTotal)
+                {this.moreData=true;
+                this.servText='>>> Get all ' + elastic.servTotal + ' results (Warning: Hundreds results can slow down your browser!)';}
+            else{
+                this.moreData=false;
+                this.servText='>>> Get all ' + elastic.servTotal + ' results ...';
+            }
             if(!item[0]){
                 this.service.setSearchLabel('NO DATA');
             }
             else{
+                //console.log("ObjectServiceComponent  ",item[0]._source.object_name);
                 this.service.setSearchLabel(item[0]._source.object_name);
-            }
+                //this.service.emitSubjectSearch(item[0]._source.object_name);
+        }
         });
         this.sortPropServ = this.service.sortPropServ;
         this.sortReverseServ = this.service.sortReverseServ;
 
 
+    }
+
+    private getMoreData() {
+        this.servText='Loading ...';
+        this.$servSearchResult = this.route
+            .queryParams
+            .map(params => params.id)
+            .flatMap((id) =>
+                this.elastic.searchInServModel(id, this.countData)
+            )
+            .subscribe((item) => { this.servSearchResult = this.service.servSearchResult =  this.sortData(item);
+            this.moreData=false;
+            
+        });
     }
 
     private getSearchLabel(): boolean {
@@ -58,15 +85,15 @@ export class ObjectServiceComponent{
         this.service.navigateToTab(itemType,itemId);
     }
 
-    private navigateToTabLink(tabLink,itemId): any  {
-        this.service.navigateToTabLink(tabLink,itemId);
+    private navigateToTabLink(tabLink,itemId, itemName?): any  {
+        this.service.navigateToTabLink(tabLink,itemId, itemName);
     }
 
     private navigateToPage(page): any  {
         this.service.navigateToPage(page);
     }
 
-    private updateGetUrl(systemId): any {
-        this.service.updateGetUrl(systemId);
+    private updateGetUrl(systemId, itemName?): any {
+        this.service.updateGetUrl(systemId, itemName);
     }
 }

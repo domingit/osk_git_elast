@@ -16,10 +16,20 @@
 .menu-content {
     margin-left: 5px !important;
     margin-top: 40px !important;
+    background-color: #6b5656;
+}
+
+.menu-item {
+    color: white !important;
+}
+
+.menu-item:hover {
+    color: #99c2ff !important;
+    background-color: #1a0d00 !important;
 }
 
 .typeahead {
-    padding-top: 7px !important;
+    padding-top: 6px !important;
 }
 
 [md2-menu] 
@@ -98,6 +108,11 @@ button:focus { outline: none; }
 
 .menu-button:focus { outline: none; }
 
+.menu-button {
+    margin-left: -2px !important;
+    padding-right: 5px;
+}
+
 #search{
     width: 480px;
     height: 49px;
@@ -108,4 +123,8 @@ button:focus { outline: none; }
     background-repeat: no-repeat;
     background-position: center;
     outline: 0;
+}
+
+i {
+    margin-right: 10px;
 }

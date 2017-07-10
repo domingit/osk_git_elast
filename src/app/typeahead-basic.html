@@ -90,7 +90,7 @@
     </div>
   </a>
 </ng-template>
-<input id="searchField" 
+<!--<input id="searchField" 
     type="search" 
     class="form-control search-field" 
     placeholder={{searchText}}
@@ -101,4 +101,16 @@
     [resultTemplate]="rt"
     [inputFormatter]="formatter"
     [resultFormatter]="formatter2"
+    (selectItem)="selectedItem($event)" />-->
+
+  <input id="searchField" 
+    type="search" 
+    class="form-control search-field" 
+    placeholder={{searchText}}
+    [focusFirst]="true"
+    [disabled]="!signedIn" 
+    [(ngModel)]="model" 
+    [ngbTypeahead]="search" 
+    [resultTemplate]="rt"
+    [inputFormatter]="formatter"
     (selectItem)="selectedItem($event)" />

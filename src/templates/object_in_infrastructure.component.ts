@@ -15,28 +15,33 @@ export class ObjectInfrastructureComponent{
     sortPropInfra: any;
     sortReverseInfra: any;
     actual_id:any;
+    infraText:any;
+    countData = 200;
+    moreData=false;
 
     constructor(private _router: Router, private elastic: ElasticSearchService, private service: ObjectService, private route: ActivatedRoute) {
-        /*this.actual_id = this.service.infra_id;
-        this.infraSearchResult = this.service.infraSearchResult;
-        console.log(this.service.selectedItemId);
-        console.log(this.actual_id);
-        if(this._router.url.split('=')[1]) {
-            if(this.actual_id!=this._router.url.split('=')[1]) {
-                this.actual_id= this.service.infra_id = this._router.url.split('=')[1];
-        */
+
+
         this.$infraSearchResult = this.route
             .queryParams
             .map(params => params.id)
             .flatMap((id) =>
-                this.elastic.searchInInfraModel(id, 200)
+                this.elastic.searchInInfraModel(id, this.countData)
             )
             .subscribe((item) => { this.infraSearchResult = this.service.infraSearchResult = this.sortData(item);
+            if(this.countData < elastic.infraTotal)
+                {this.moreData=true;
+                this.infraText='>>> Get all ' + elastic.infraTotal + ' results (Warning: Hundreds results can slow down your browser!)';}
+            else{
+                this.moreData=false;
+                this.infraText='>>> Get all ' + elastic.infraTotal + ' results ...';
+            }
             if(!item[0]){
                 this.service.setSearchLabel('NO DATA');
             }
             else{
                 this.service.setSearchLabel(item[0]._source.system_name);
+
             }
         });
         this.sortPropInfra = this.service.sortPropInfra;
@@ -44,6 +49,21 @@ export class ObjectInfrastructureComponent{
             //}
         //}
 
+
+    }
+
+    private getMoreData() {
+        this.infraText='Loading ...';
+        this.$infraSearchResult = this.route
+            .queryParams
+            .map(params => params.id)
+            .flatMap((id) =>
+                this.elastic.searchInInfraModel(id, 10000)
+            )
+            .subscribe((item) => { this.infraSearchResult = this.service.infraSearchResult = this.sortData(item);
+            this.moreData=false;
+            
+        });
 
     }
 
@@ -69,15 +89,15 @@ export class ObjectInfrastructureComponent{
         this.service.navigateToTab(itemType,itemId);
     }
 
-    private navigateToTabLink(tabLink,itemId): any  {
-        this.service.navigateToTabLink(tabLink,itemId);
+    private navigateToTabLink(tabLink,itemId, itemName?): any  {
+        this.service.navigateToTabLink(tabLink,itemId, itemName);
     }
 
     private navigateToPage(page): any  {
         this.service.navigateToPage(page);
     }
 
-    private updateGetUrl(systemId): any {
-        this.service.updateGetUrl(systemId);
+    private updateGetUrl(systemId, itemName?): any {
+        this.service.updateGetUrl(systemId, itemName);
     }
 }

@@ -1,6 +1,7 @@
-<div class="container-fluid row">
+<div class="container-fluid row container-corr">
     <div class="panel panel-primary">
-        <div class="panel-heading" *ngIf="getSearchLabel()">
+        <div class="panel-heading panel-heading-corr" *ngIf="getSearchLabel()">
+          <!--<div class="panel-heading" *ngIf="getSearchLabel()">-->
             <h3 class="panel-title ">{{head_title}}</h3>
             <div class="navbar-header">
             <button type="button" class="navcorrect navbar-toggle collapsed" (click)="toggleState()">
