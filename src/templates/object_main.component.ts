@@ -16,7 +16,7 @@ export class ObjectMainBodyComponent{
     constructor(private objectService: ObjectService){
     }
 
-    private getSearchLabel(): boolean {
+    public getSearchLabel(): boolean {
         return this.objectService.getSearchLabel();
     }
 

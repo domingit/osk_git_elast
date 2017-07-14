@@ -14,7 +14,7 @@ export class ModalComponent {
   @Input() showFooter:any;
 
   public visible = false;
-  private visibleAnimate = false;
+  public visibleAnimate = false;
 
   constructor(private objectService: ObjectService) {
     this.visible = false;

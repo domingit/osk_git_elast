@@ -44,7 +44,7 @@ export class ObjectInfoComponent{
 
     }
 
-    private getSearchLabel(): boolean {
+    public getSearchLabel(): boolean {
         return true;
     }
 

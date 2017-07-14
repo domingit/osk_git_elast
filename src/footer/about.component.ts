@@ -15,11 +15,11 @@ constructor(private service: ObjectService){
 }
 
 
-  private getMeInfo(itemType,itemId): any {
+  public getMeInfo(itemType,itemId): any {
     this.service.navigateToTabLink(itemType,itemId);
   }
 
-  private closeModal(): any {
+  public closeModal(): any {
     //this.service.emitSubjectSign(true);
     this.service.emitSubjectModal(true);
   }
