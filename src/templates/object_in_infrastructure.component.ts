@@ -5,8 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'object-infrastructure',
-    templateUrl: './object_in_infrastructure.component.html',
-    styleUrls: ['./object_in_infrastructure.component.css']
+    templateUrl: './object_in_infrastructure.component.html'
 })
 
 export class ObjectInfrastructureComponent{
@@ -18,6 +17,7 @@ export class ObjectInfrastructureComponent{
     infraText:any;
     countData = 200;
     moreData=false;
+    id:any;
 
     constructor(private _router: Router, private elastic: ElasticSearchService, private service: ObjectService, private route: ActivatedRoute) {
 
@@ -29,6 +29,7 @@ export class ObjectInfrastructureComponent{
                 this.elastic.searchInInfraModel(id, this.countData)
             )
             .subscribe((item) => { this.infraSearchResult = this.service.infraSearchResult = this.sortData(item);
+            this.id=this._router.url.split('=')[1];
             if(this.countData < elastic.infraTotal)
                 {this.moreData=true;
                 this.infraText='>>> Get all ' + elastic.infraTotal + ' results (Warning: Hundreds results can slow down your browser!)';}
@@ -46,8 +47,6 @@ export class ObjectInfrastructureComponent{
         });
         this.sortPropInfra = this.service.sortPropInfra;
         this.sortReverseInfra = this.service.sortReverseInfra;
-            //}
-        //}
 
 
     }

@@ -65,3 +65,7 @@
 .tabright {
     padding-right: 10px !important;
 }
+
+.bold-name{
+    font-weight: bold;
+}

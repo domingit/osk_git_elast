@@ -16,6 +16,7 @@ export class ObjectProductComponent{
     countData=200;
     moreData = false;
     prodText:any;
+    id:any;
 
     constructor(private _router: Router, private elastic: ElasticSearchService, private service: ObjectService, private route: ActivatedRoute) {
     
@@ -26,6 +27,7 @@ export class ObjectProductComponent{
                 this.elastic.searchInProdModel(id, this.countData)
             )
             .subscribe((item) => { this.prodSearchResult = this.service.prodSearchResult =  this.sortData(item);
+            this.id=this._router.url.split('=')[1];
             if(this.countData < elastic.prodTotal)
                 {this.moreData=true;
                 this.prodText='>>> Get all ' + elastic.prodTotal + ' results (Warning: Hundreds results can slow down your browser!)';}
@@ -37,9 +39,7 @@ export class ObjectProductComponent{
                 this.service.setSearchLabel('NO DATA');
             }
             else{
-                //console.log("ObjectProductComponent  ",item);
                 this.service.setSearchLabel(item[0]._source.system_name);
-                //this.service.emitSubjectSearch(item[0]._source.system_name);
         }
             });
         this.sortPropProd = this.service.sortPropProd;

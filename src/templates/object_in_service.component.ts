@@ -16,10 +16,10 @@ export class ObjectServiceComponent{
     countData = 200;
     moreData = false;
     servText:any;
+    id:any;
 
 
     constructor(private _router: Router, private elastic: ElasticSearchService, private service: ObjectService, private route: ActivatedRoute) {
-        //console.log("TU",this.service.selectedItemId);
         this.$servSearchResult = this.route
             .queryParams
             .map(params => params.id)
@@ -27,6 +27,7 @@ export class ObjectServiceComponent{
                 this.elastic.searchInServModel(id, this.countData)
             )
             .subscribe((item) => { this.servSearchResult = this.sortData(item);
+            this.id=this._router.url.split('=')[1];
             if(this.countData < elastic.servTotal)
                 {this.moreData=true;
                 this.servText='>>> Get all ' + elastic.servTotal + ' results (Warning: Hundreds results can slow down your browser!)';}
@@ -35,12 +36,9 @@ export class ObjectServiceComponent{
                 this.servText='>>> Get all ' + elastic.servTotal + ' results ...';
             }
             if(!item[0]){
-                this.service.setSearchLabel('NO DATA');
             }
             else{
-                //console.log("ObjectServiceComponent  ",item[0]._source.object_name);
                 this.service.setSearchLabel(item[0]._source.object_name);
-                //this.service.emitSubjectSearch(item[0]._source.object_name);
         }
         });
         this.sortPropServ = this.service.sortPropServ;

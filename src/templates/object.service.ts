@@ -101,7 +101,6 @@ export class ObjectService {
   }
 
     constructor(private _router: Router, @Inject(DOCUMENT) private document: any){
-        //console.log("this.signedIn ", this.signedIn);
         if (this.signedIn != true || this.signedIn != true)
         {
             this.signedIn = true;
@@ -112,8 +111,6 @@ export class ObjectService {
         } else{
             this.searchText = "You are not signed in !!!!"
         }
-
-        //console.log("this.sssssssssssssssssss ", this.signedIn);
     }
 
     public getPlaceholder(signed) {
@@ -161,9 +158,6 @@ export class ObjectService {
 
     public navigateToOutPage(page): any  {
         this._router.ngOnDestroy();
-        //window.location.href=page; 
-
-        //console.log("page  ", this.account_url);
         if(page='account') {
             this.document.location.href ='https://idp.orange.sk/auth/realms/orange/account/?referrer=elastika';
         }

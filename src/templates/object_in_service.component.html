@@ -95,7 +95,7 @@
                             <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.service_id, item._source.service_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
-                            <span *ngIf="item._source.service_id == id"
+                            <span *ngIf="item._source.service_id == id" class="bold-name"
                                   [innerHTML]="item._source.service_name "></span>
                             <a *ngIf="item._source.service_id != id" (click)="updateGetUrl(item._source.service_id, item._source.service_name)">
                                
@@ -112,7 +112,7 @@
                             <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.process_id, item._source.process_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
-                            <span *ngIf="item._source.process_id == id"
+                            <span *ngIf="item._source.process_id == id" class="bold-name"
                                   [innerHTML]="item._source.process_name"></span>
                             <a *ngIf="item._source.process_id != id" (click)="updateGetUrl(item._source.process_id, item._source.process_name)">
                                
@@ -128,7 +128,7 @@
                             <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.procitf_id, item._source.process_interface)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
-                            <span *ngIf="item._source.procitf_id == id"
+                            <span *ngIf="item._source.procitf_id == id" class="bold-name"
                                   [innerHTML]="item._source.process_interface"></span>
                             <a *ngIf="item._source.procitf_id != id" (click)="updateGetUrl(item._source.procitf_id, item._source.process_interface)">
                                
@@ -145,7 +145,7 @@
                             <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.object_id, item._source.object_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
-                            <span *ngIf="item._source.object_id == id"
+                            <span *ngIf="item._source.object_id == id" class="bold-name"
                                   [innerHTML]="item._source.object_name "></span>
                             <a *ngIf="item._source.object_id != id" (click)="updateGetUrl(item._source.object_id, item._source.object_name)">
                                
@@ -155,9 +155,9 @@
                     </td>
                     <!--td [innerHTML]="item._source.responsible_engineer+' ('+item._source.responsible_engineer_login+')' "></td-->
                 </tr>
-                <tr *ngIf="servSearchResult">
+                <!--<tr *ngIf="servSearchResult">
                     <td colspan = "7" *ngIf="servSearchResult.length==0">No data found</td>
-                </tr>
+                </tr>-->
                 </tbody>
             </table>
         </div>

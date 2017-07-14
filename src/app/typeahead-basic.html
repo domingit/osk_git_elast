@@ -113,4 +113,6 @@
     [ngbTypeahead]="search" 
     [resultTemplate]="rt"
     [inputFormatter]="formatter"
-    (selectItem)="selectedItem($event)" />
+    (selectItem)="selectedItem($event)"
+    (ngModelChange)="valuechange($event)"
+     />

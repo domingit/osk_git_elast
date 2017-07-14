@@ -5,7 +5,7 @@ import { ElasticSearchService } from '../elastic/elasticsearch.service';
 import { ObjectService } from "templates/object.service";
 import { unescape } from "querystring";
 
-import { AuthHttp } from 'angular2-jwt';
+//import { AuthHttp } from 'angular2-jwt';
 import { KeycloakService } from './keycloak.service';
 
 @Component({
@@ -25,7 +25,6 @@ export class AppComponent implements OnInit{
     this.searchText = this.objectService.searchText;
     this.signedIn = this.objectService.signedIn;
     this.indexAliasesModel = this.setIndices(['default']);
-    //console.log(localStorage.getItem("ES_index_aliases"));
     /*if(localStorage.getItem("ES_index_aliases")!='null' && localStorage.getItem("ES_index_aliases")!='undefined'){
         this.indexAliasesModel = this.elastic.indexAliasesModel = JSON.parse(localStorage.getItem("ES_index_aliases"));
     } else {
@@ -33,16 +32,12 @@ export class AppComponent implements OnInit{
     }*/
   }
   ngOnInit(){
-      //console.log("user Info  ", this.kc.getUserInfo());
       this.authz = this.kc.getUserInfo();
       if (this.authz){
           this.signedIn=!this.authz.loggedIn;
-          //console.log("sign  ", this.signedIn);
           this.objectService.signedIn = this.signedIn;
           this.objectService.emitSubjectSign(this.signedIn);
           this.objectService.emitSubjectAuth(this.authz);
-          //console.log("sign on init ",this.objectService.signedIn);
-          //console.log(this.authz);
       }
   }
 
@@ -60,28 +55,20 @@ export class AppComponent implements OnInit{
         this.isIn = bool === false ? true : false;
   }
 
-  getMeInfo = function () {
-        //console.log("getMeInfo");
-        this.updateGetUrl('00000865');
-        this.id = '00000865';
-        this.initializeInfoTab();
-  }
-
     signIn = function(){
-        //console.log("signIn");
         this.kc.auth.authz.login();
-        //auth.authz.login();
     }
 
     signOut = function(){
-        //console.log("signOut");
         this.kc.signOut({redirectUri: this.objectService.logout_redirect_uri});
-        //this.kc.auth.authz.logout({redirectUri: this.objectService.logout_redirect_uri});
-        //auth.authz.logout({redirectUri: myConfig.logout_redirect_uri});
     }
 
     navigateHome(){
       this.objectService.navigateToHome();
+    }
+
+    clearSearch(){
+         this.objectService.emitSubjectSearch("");
     }
 
 

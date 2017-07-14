@@ -32,7 +32,6 @@ export class ObjectBodyComponent{
                 }
             }
         }
-        //console.log('taby', this.tabs);
         this._router.events
         .subscribe(
             (url:any) => {
@@ -73,7 +72,6 @@ export class ObjectBodyComponent{
   }
 
     getSearchLabel() {
-        //return true;
         return this.objectService.getSearchLabel();
     }
 

@@ -65,7 +65,8 @@ export class ElasticSearchService {
     constructor(private ObjectService: ObjectService) {
         this._client = elasticsearch.Client(
         {
-            host: 'https://localhost/',
+            //host: 'https://localhost/',
+            host: this.ES_uri,
             maxRetries: 0,
             requestTimeout: 5000,
             apiVersion: '5.3' //, log: 'trace'
@@ -117,7 +118,6 @@ export class ElasticSearchService {
     }
 
   private _serverError(err: any) {
-        //console.log('sever error:', err);
         if(err instanceof Response) {
           return Observable.throw(err.json().error || 'backend server error');
         }
@@ -125,7 +125,6 @@ export class ElasticSearchService {
     }
 
   public suggest(val, index?) : any {
-      //console.log("suggest");
       var indices = this.setAllowedIndices();
       if(indices.length>0){
        return Observable.fromPromise(this._client.search({
@@ -225,7 +224,6 @@ export class ElasticSearchService {
     };
 
     public getObjectById = function (val) {
-        //console.log("getObjectById");
         this.id = val;
         let index = this.getAllIndices();
         return Observable.fromPromise(this._client.search({
@@ -246,7 +244,6 @@ export class ElasticSearchService {
     };    
 
      public searchInInfraModel = function (val, size) {
-        //console.log("searchInInfraModel");
         var index = "alias_system_instance_servers";
         this.infraModelId = val;
         //console.log(val);
@@ -281,7 +278,6 @@ export class ElasticSearchService {
     };
 
     public searchInProdModel = function (val, size) {
-        //console.log("searchInProdModel");
         var index = "alias_product_services";
         this.prodModelId = val;
         if(this.prod_id!=val)
@@ -312,7 +308,6 @@ export class ElasticSearchService {
     };
 
     public searchInServModel = function (val, size) {
-        //console.log("searchInServModel");
         var index = "alias_service_process_systems";
         this.servModelId = val;
         if(this.serv_id!=val)
@@ -345,7 +340,6 @@ export class ElasticSearchService {
     };
 
     public searchInRespModel = function (val, size) {
-        //console.log("searchInRespModel");
         var index = "alias_responsibilities";
         this.respModelId = val;
         if(this.resp_id!=val)

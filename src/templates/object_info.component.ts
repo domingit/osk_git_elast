@@ -16,7 +16,8 @@ export class ObjectInfoComponent{
     item: any;
     sortPropResp = '';
     sortReverseResp = false;
-    navigateTitle: any;        
+    navigateTitle: any; 
+    id: any;
 ;
 
     constructor(private _router: Router, private elastic: ElasticSearchService, private service: ObjectService, private route: ActivatedRoute) {
@@ -28,12 +29,11 @@ export class ObjectInfoComponent{
                 this.elastic.getObjectById(id)
             )
             .subscribe((item) => { this.item = item;
-             //   console.log("resp item     ", item._type);
+            this.id=this._router.url.split('=')[1];
             if(!item[0]){
                 this.service.setSearchLabel('NO DATA');
             }
             else{
-                //console.log("resp  ",item[0]._source.name);
                 this.service.setSearchLabel(item[0]._source.name);
                 this.service.emitSubjectSearch(item[0]._source.name);
             }

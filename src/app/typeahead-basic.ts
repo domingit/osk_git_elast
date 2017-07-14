@@ -9,11 +9,16 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ObjectService } from "templates/object.service";
 import { LocationStrategy } from "@angular/common";
+import { _do } from "rxjs/operator/do";
+import { switchMap } from "rxjs/operator/switchMap";
+import { distinctUntilChanged } from "rxjs/operator/distinctUntilChanged";
+import { debounceTime } from "rxjs/operator/debounceTime";
+import { _catch } from "rxjs/operator/catch";
+import { of } from "rxjs/observable/of";
 
 @Component({
   selector: 'ngbd-typeahead-template',
-  templateUrl: './typeahead-basic.html',
-  styleUrls: ['./typeahead-basic.css']
+  templateUrl: './typeahead-basic.html'
 })
 export class NgbdTypeaheadTemplate {
 
@@ -22,7 +27,6 @@ export class NgbdTypeaheadTemplate {
   searchFailed = false;
   $respSearchResult: any;
   respSearchResult: any;
-  //signedIn:any;
   signedIn = true;
   id: any;
   sub: any;
@@ -32,8 +36,6 @@ export class NgbdTypeaheadTemplate {
 
   constructor(private route: ActivatedRoute, private _router: Router, private locationStrategy: LocationStrategy, private elastic: ElasticSearchService, private objectService: ObjectService) {
     this.searchText = this.objectService.searchText;
-    //this.signedIn = objectService.signedIn;
-    //console.log("typeahead sign  ", this.signedIn);
     this._router.events
       .subscribe(
       (url: any) => {
@@ -49,11 +51,6 @@ export class NgbdTypeaheadTemplate {
                   this.searchText = this.objectService.getPlaceholder(signn);
                 }
             );
-
-      /*this.objectService.searchName$.subscribe(
-                (searchName) => {this.searchName = searchName;
-                }
-      );*/
       
       this.objectService.searchName$.subscribe(
                 (searchName) => {this.model = searchName;
@@ -63,7 +60,7 @@ export class NgbdTypeaheadTemplate {
 
   }
 
-  search = (text$: Observable<string>) =>
+  /*search = (text$: Observable<string>) =>
     text$
       .debounceTime(300)
       .distinctUntilChanged()
@@ -77,8 +74,9 @@ export class NgbdTypeaheadTemplate {
         //console.log("citam");
       }
     })
+    //term.length < 2 || this.indexLength == 0 ? []
       .switchMap(term => 
-     term.length < 2 || this.indexLength == 0 ? []
+     term.length < 2 ? []
         : this.elastic.suggest(term)
           .do(() => {this.searchFailed = false
           })
@@ -86,10 +84,42 @@ export class NgbdTypeaheadTemplate {
             this.searchFailed = true;
             //console.log("chyba");
             return Observable.of([]);
-          }))
+          })
+          )
       .do(() => {this.searching = false
       //console.log("nacitane");
-    });
+    });*/
+
+    search = (text$: Observable<string>) =>
+    _do.call(
+      switchMap.call(
+        _do.call(
+          distinctUntilChanged.call(
+            debounceTime.call(text$, 300)),
+          () => {
+            this.indexLength =  this.elastic.setAllowedIndices().length;
+            if(this.indexLength==0){
+              alert('You do not have selected any index. You must choose at least one in Settings');
+            }
+            else{
+              this.searching = true;
+              //console.log("citam");
+            }
+          }),
+        term =>
+          //term.length < 2 || this.indexLength == 0 ? [] :
+          this.indexLength == 0 ? _catch.call(
+            of.call([])
+            ) :
+          _catch.call(
+            _do.call(this.elastic.suggest(term), () => this.searchFailed = false),
+            () => {
+              this.searchFailed = true;
+              return of.call([]);
+            }
+          )
+      ),
+      () => this.searching = false);
 
 
   /*formatter = (x: { _source: any }) => 
@@ -98,13 +128,15 @@ export class NgbdTypeaheadTemplate {
     formatter = (x: { _source: any }) =>
     this.searchName;  
   
+  valuechange(newValue) {
+    //console.log(newValue);
+  }
 
 
   selectedItem(item) {
     this.objectService.emitSubjectSearch(item.item._source.name);
     this.objectService.selectedItemId = item.item._id;
     this.objectService.emitSubject(item.item._type);
-    //console.log(item);
 
     if(this._router.url=='/main'){
       this._router.navigate(['object/info'], {queryParams: {id: item.item._id}});

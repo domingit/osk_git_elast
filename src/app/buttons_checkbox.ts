@@ -7,7 +7,6 @@ import {Component, Input, Output, EventEmitter, DoCheck} from '@angular/core';
 export class NgbdButtonsCheckbox implements DoCheck {
 
   @Input() indexAliasesModel: any;
-  //@Output() indexAliasesModelChange = new EventEmitter<any>();
   @Output() indexAliasesModelChange: EventEmitter<any> = new EventEmitter();
 
   constructor(){}

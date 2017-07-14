@@ -22,7 +22,7 @@
                         <i id="icon" class="fa fa-tasks" style="font-size: 23px; color: rgb(255, 255, 255); background-color: rgb(47, 108, 154); height: 38px; width: 38px; line-height: 39px; border-radius: 50%; overflow: hidden; text-align: center; position: static; top: 90px; z-index: 2; text-shadow: rgb(33, 76, 108) 0px 0px, rgb(35, 80, 114) 1px 1px, rgb(37, 85, 121) 2px 2px, rgb(39, 89, 128) 3px 3px, rgb(41, 94, 134) 4px 4px, rgb(43, 99, 141) 5px 5px, rgb(45, 103, 147) 6px 6px;"></i>
                     </button>
                         <div md2-menu-content class="menu-content">
-                            <a target="_blank" class="menu-item" (click)="navigateHome()" md2-menu-item>
+                            <a target="_blank" class="menu-item" (click)="navigateHome(); clearSearch();" md2-menu-item>
                                 <i id="icon" class="fa fa-fw fa-tasks"></i>Elastika
                             </a>
                             <a type="button" md2-menu-item class="menu-item" (click)="profile.show()">
@@ -48,78 +48,69 @@
                             </a>
                         </div>
                     </div>
-                <!--<button type="button" class="btn btn-primary sign-button" [hidden]="signedIn" title="Sign in" (click)="signIn()">
-                Sign in</button>-->
             </div>
             <div class="typeahead">
                 <ngbd-typeahead-template></ngbd-typeahead-template>
             </div>
-
-            <!--<button type="button" (click)="login()">LOGIN</button>-->
-
     </div>
 </nav>
 
 <div class="container-fluid">
-
     <div>
         <object-body></object-body>  
     </div>
+    <footer-elastika></footer-elastika>
 
-
-<footer-elastika></footer-elastika>
-
- <app-modal #options [showHeader]="true" [showFooter]="true" tabindex="-1">
-    <div class="app-modal-header">
-      <h4 class="modal-title" id="myModalLabel">Choose indices for search</h4>
-    </div>
-    <div class="app-modal-body">
-        <div class="row" *ngIf="indexAliasesModel">
-            <ngbd-buttons-checkbox [(indexAliasesModel)]="indexAliasesModel"></ngbd-buttons-checkbox>
+    <app-modal #options [showHeader]="true" [showFooter]="true" tabindex="-1">
+        <div class="app-modal-header">
+        <h4 class="modal-title" id="myModalLabel">Choose indices for search</h4>
         </div>
-    </div>
-    <div class="app-modal-footer">
-        <div class="row">
-            <div class="col-xs-6 col-md-2 col-lg-2"><label class="btn btn-info btn-group-justified" (click)="setIndices(['default'])">Set to default</label></div>
-            <div class="col-xs-6 col-md-2 col-lg-2"><label class="btn btn-info btn-group-justified" (click)="setIndices(['all'])">All</label></div>
-            <div class="col-xs-6 col-md-2 col-lg-2"><label class="btn btn-info btn-group-justified" (click)="setIndices([])">None</label></div>
-            <div class="col-xs-6 col-md-2 col-lg-2"><label class="btn btn-info btn-group-justified" (click)="setIndices(['alias_systems'])">Systems only</label></div>
-            <div class="col-xs-6 col-md-2 col-lg-2"><label class="btn btn-info btn-group-justified" (click)="setIndices(['alias_services'])">Services only</label></div>
-            <div class="col-xs-6 col-md-2 col-lg-2"><label class="btn btn-info btn-group-justified" (click)="setIndices(['alias_business_terms'])">Bus.terms only</label></div>
+        <div class="app-modal-body">
+            <div class="row" *ngIf="indexAliasesModel">
+                <ngbd-buttons-checkbox [(indexAliasesModel)]="indexAliasesModel"></ngbd-buttons-checkbox>
+            </div>
         </div>
-    </div>
-  </app-modal>
+        <div class="app-modal-footer">
+            <div class="row">
+                <div class="col-xs-6 col-md-2 col-lg-2"><label class="btn btn-info btn-group-justified" (click)="setIndices(['default'])">Set to default</label></div>
+                <div class="col-xs-6 col-md-2 col-lg-2"><label class="btn btn-info btn-group-justified" (click)="setIndices(['all'])">All</label></div>
+                <div class="col-xs-6 col-md-2 col-lg-2"><label class="btn btn-info btn-group-justified" (click)="setIndices([])">None</label></div>
+                <div class="col-xs-6 col-md-2 col-lg-2"><label class="btn btn-info btn-group-justified" (click)="setIndices(['alias_systems'])">Systems only</label></div>
+                <div class="col-xs-6 col-md-2 col-lg-2"><label class="btn btn-info btn-group-justified" (click)="setIndices(['alias_services'])">Services only</label></div>
+                <div class="col-xs-6 col-md-2 col-lg-2"><label class="btn btn-info btn-group-justified" (click)="setIndices(['alias_business_terms'])">Bus.terms only</label></div>
+            </div>
+        </div>
+    </app-modal>
 
+    <app-modal #profile [showHeader]="false" tabindex="-1">
+        <div class="app-modal-body">
+            <profile-body></profile-body>
+        </div>
+    </app-modal>
 
-<app-modal #profile [showHeader]="false" tabindex="-1">
+    <app-modal #about [showHeader]="false" tabindex="-1">
+        <div class="app-modal-body">
+            <about-body></about-body>
+        </div>
+    </app-modal>
+
+    <app-modal #links [showHeader]="false" tabindex="-1">
+        <div class="app-modal-body">
+            <links-body></links-body>
+        </div>
+    </app-modal>
+
+    <app-modal #contants [showHeader]="false" tabindex="-1">
     <div class="app-modal-body">
-        <profile-body></profile-body>
-    </div>
-</app-modal>
+            <contacts-body></contacts-body>
+        </div>
+    </app-modal>
 
-<app-modal #about [showHeader]="false" tabindex="-1">
+    <app-modal #news [showHeader]="false" tabindex="-1">
     <div class="app-modal-body">
-        <about-body></about-body>
-    </div>
-</app-modal>
-
-<app-modal #links [showHeader]="false" tabindex="-1">
-    <div class="app-modal-body">
-        <links-body></links-body>
-    </div>
-</app-modal>
-
-<app-modal #contants [showHeader]="false" tabindex="-1">
-   <div class="app-modal-body">
-        <contacts-body></contacts-body>
-    </div>
-</app-modal>
-
-<app-modal #news [showHeader]="false" tabindex="-1">
-   <div class="app-modal-body">
-        <news-body></news-body>
-    </div>
-</app-modal>
+            <news-body></news-body>
+        </div>
+    </app-modal>
 
 </div>
 

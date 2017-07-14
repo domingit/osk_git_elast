@@ -1,6 +1,5 @@
 
 import {Component, Input} from '@angular/core';
-import { ModalService } from './modal.service';
 import { ObjectService } from "templates/object.service";
 
 
@@ -17,10 +16,10 @@ export class ModalComponent {
   public visible = false;
   private visibleAnimate = false;
 
-  constructor(private service: ModalService, private objectService: ObjectService) {
+  constructor(private objectService: ObjectService) {
     this.visible = false;
     this.visibleAnimate = false;
-    this.objectService.signn$
+    this.objectService.modal$
           .subscribe(
                 (
                   modal) => {this.visible = !modal;

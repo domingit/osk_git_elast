@@ -5,6 +5,7 @@ declare var Keycloak: any;
 @Injectable()
 export class KeycloakService {
   static auth: any = {};
+  static redirectUrl = "localhost:4444";
 
   static init(): Promise<any> {
     //let keycloakAuth: any = new Keycloak('keycloak.json');
@@ -40,11 +41,12 @@ export class KeycloakService {
 
         keycloakAuth.init({ responseMode: 'fragment',
                             flow: 'standard',
-                            onLoad: 'login-required' })
+                            onLoad: 'login-required',
+                            checkLoginIframeInterval: 30 })
           .success(() => {
             KeycloakService.auth.loggedIn = true;
             KeycloakService.auth.authz = keycloakAuth;
-            KeycloakService.auth.logoutUrl = "localhost:4444";// "/realms/demo/protocol/openid-connect/logout?redirect_uri=/angular2-product/index.html";
+            KeycloakService.auth.logoutUrl = this.redirectUrl;
             resolve();
           })
           .error(() => {
@@ -71,7 +73,6 @@ export class KeycloakService {
   }
 
   getUserInfo() {
-    //console.log('*** getUserInfo');
     return KeycloakService.auth;
   }
 

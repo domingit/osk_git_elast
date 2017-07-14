@@ -16,6 +16,7 @@ export class ObjectResponsibilityComponent {
     countData = 200;
     moreData = false;
     respText: any;
+    id:any;
 
     constructor(private _router: Router, private elastic: ElasticSearchService, private service: ObjectService, private route: ActivatedRoute) {
         this.respSearchResult = this.service.respSearchResult;
@@ -27,6 +28,7 @@ export class ObjectResponsibilityComponent {
                 this.elastic.searchInRespModel(id, this.countData)
             )
             .subscribe((item) => { 
+                this.id=this._router.url.split('=')[1];
                 this.respSearchResult = this.service.respSearchResult = this.sortData(item);
                 if(this.countData < elastic.respTotal)
                     {this.moreData=true;
@@ -39,9 +41,7 @@ export class ObjectResponsibilityComponent {
                     this.service.setSearchLabel('NO DATA');
                 }
                 else{
-                    //console.log("ObjectResponsibilityComponent  ",item[0]._source.subject_name);
                     this.service.setSearchLabel(item[0]._source.subject_name);
-                    //this.service.emitSubjectSearch(item[0]._source.subject_name);
             }
              });
         this.sortPropResp = this.service.sortPropResp;

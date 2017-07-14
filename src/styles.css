@@ -3,6 +3,7 @@
 @import '~https://fonts.googleapis.com/icon?family=Material+Icons';
 /*@import '~@angular/material/prebuilt-themes/indigo-pink.css';*/
 
+
 * {
    -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
@@ -53,13 +54,6 @@ text-decoration: none;
       -ms-transform: rotate(30deg);
           transform: rotate(30deg);
 }
-
-/* no more used. In the past it was used for padding of photo
-  .panel td{
-  padding: 0px 5px 5px 0px;
-  vertical-align: bottom;
-}
-*/
 
 /* Pegi - fixing of main search dropdown menu to fit white area*/
 .dropdown-menu > li > a {
@@ -175,25 +169,8 @@ body {
     right: 0;
 }
 
-/*.first-time-page {
-    background-image: url('./assets/background_mac.jpg');
-    /*background-color: #222;*/
- /*   background-repeat: no-repeat;
-    background-attachment: scroll;
-    background-position: center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-    text-align: center;
-    color: white;
-    margin-top: 0px;
-    padding: 0px;
-}*/
-
 .first-time-page {
     background-image: url('./assets/background_mac.jpg');
-    /*background-color: #222;*/
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center center;
@@ -244,8 +221,6 @@ body {
         word-break: break-all;
         margin-left: 400px;
         margin-top:40px;
-
-        /*padding-left: 100px;*/
     }
 }
 
@@ -529,31 +504,6 @@ input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: searchfield-cancel-button;
 }
 
-/*
-body {
-  /*margin-top: 50px;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 400
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.navbar-brand,
-.brand-name {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 400
-}
-
-p.lead {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 400
-}*/
-
-
 [hidden] {
   display: none;
 }
@@ -565,7 +515,7 @@ body {
   font-family: Roboto, sans-serif;
 }
 
-md-card {
+/*md-card {
   max-width: 80%;
   margin: 2em auto;
   text-align: center;
@@ -580,9 +530,15 @@ md-toolbar-row {
   bottom: 20px;
   right: 20px;
   color: white;
-}
+}*/
 
-.dropdown-menu button:hover, .dropdown-menu button:active,
+/*.dropdown-menu button:hover, .dropdown-menu button:active,
+.dropdown-menu>.active>a:hover, .dropdown-menu.active a
+{
+  background-color: #2e6da4 !important;
+}*/
+
+.dropdown-menu button:active,
 .dropdown-menu>.active>a:hover, .dropdown-menu.active a
 {
   background-color: #2e6da4 !important;
@@ -611,19 +567,6 @@ a {
     text-decoration: none;
 }
 
-
-
-/*.dropdown-menu button
-{
-  color: black !important;
-  width: 100% !important;
-  text-align: left !important;
-  display: block;
-  margin-bottom: 3px !important;
-  border-color: #ddd;
-  background-color: white;
-}*/
-
 .dropdown-item:after
 {
     content:"";
@@ -636,13 +579,14 @@ a {
 .dropdown-menu a
 {
   text-align: left !important;
+  color: black;
 }
 
 .firstPage {
     background-color: black;
 }
 
-
+/*
 .sign-button {
     position: absolute !important;
     right: 10px !important;
@@ -667,7 +611,7 @@ a {
     padding-top: 20px;
     left: 350px;
 }
-
+*/
 .glyphicon-correcr
 {
     float:left;
@@ -714,7 +658,6 @@ a {
     padding-left: 0px !important;
 }
 
-/*.container-corr {
-    margin-right: -30px !important;
-    margin-left: -30px !important;
-}*/
+.bold-name{
+    font-weight: bold;
+}

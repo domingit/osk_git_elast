@@ -4,10 +4,10 @@ import { ObjectService } from "templates/object.service";
 
 @Component({
     selector: 'main-body',
-    templateUrl: './object1.component.html'
+    templateUrl: './object_main.component.html'
 })
 
-export class Object1BodyComponent{
+export class ObjectMainBodyComponent{
     private head_title:string;
     isIn = false;   // store state
 
@@ -18,7 +18,6 @@ export class Object1BodyComponent{
 
     private getSearchLabel(): boolean {
         return this.objectService.getSearchLabel();
-        //return false;
     }
 
 }

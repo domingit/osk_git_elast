@@ -21,7 +21,7 @@ import {ObjectResponsibilityComponent} from '../templates/object_in_responsibili
 import {ObjectProductComponent} from '../templates/object_in_product.component';
 import {ObjectInfrastructureComponent} from '../templates/object_in_infrastructure.component';
 import {ObjectBodyComponent}    from '../templates/object.component';
-import {Object1BodyComponent}    from '../templates/object1.component';
+import {ObjectMainBodyComponent}    from '../templates/object_main.component';
 import { ObjectService }        from '../templates/object.service';
 import { ElasticSearchService } from '../elastic/elasticsearch.service';
 import { FooterComponent }      from '../footer/footer.component';
@@ -33,8 +33,7 @@ import { NewsComponent }        from '../footer/news.component';
 import { NgbdTypeaheadTemplate } from './typeahead-basic';
 import { KeycloakService }      from './keycloak.service';
 import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
-import { ModalService }         from '../modal_window/modal.service';
-import { CustomHttp }      from './http.service';
+import { CustomHttp }      from './http.service'
 
 //import { CookieModule } from 'ngx-cookie';
 //import { MaterialModule } from '@angular/material';
@@ -56,7 +55,7 @@ import { Md2Module }  from 'md2';
     ModalComponent,
     ObjectInfoComponent,
     ObjectServiceComponent,
-    Object1BodyComponent,
+    ObjectMainBodyComponent,
     ObjectResponsibilityComponent,
     ObjectProductComponent,
     ObjectInfrastructureComponent,
@@ -73,7 +72,7 @@ import { Md2Module }  from 'md2';
     BrowserModule,
     FormsModule,
     HttpModule,
-    //MaterialModule,
+//    MaterialModule,
     ReactiveFormsModule,
     JsonpModule,
     Md2Module,
@@ -87,7 +86,6 @@ import { Md2Module }  from 'md2';
     ElasticSearchService, 
     ObjectService, 
     KeycloakService,
-    ModalService,
     /*{
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,

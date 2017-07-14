@@ -86,7 +86,7 @@
                             <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.service_id, item._source.service_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
-                            <span *ngIf="item._source.service_id == id"
+                            <span *ngIf="item._source.service_id == id" class="bold-name"
                                   [innerHTML]="item._source.service_name"></span>
                             <a *ngIf="item._source.service_id != id" (click)="updateGetUrl(item._source.service_id, item._source.service_name)">
                                 <span [innerHTML]="item._source.service_name"></span>
@@ -106,7 +106,7 @@
                             <a class="anchorimg" (click)="navigateToTabLink('/object/info',item._source.product_id, item._source.product_name)">
 				            <i class="pulse fa fa-info-circle fa-lg"></i>
                             </a>
-                            <span *ngIf="item._source.product_id == id"
+                            <span *ngIf="item._source.product_id == id" class="bold-name"
                                   [innerHTML]="item._source.product_name"></span>
                             <a *ngIf="item._source.product_id != id" (click)="updateGetUrl(item._source.product_id, item._source.product_name)">
                                 <span [innerHTML]="item._source.product_name"></span>
@@ -120,9 +120,9 @@
                     <!--</td>-->
                     <!--td [innerHTML]="item._source.responsible_engineer+' ('+item._source.responsible_engineer_login+')'"></td-->
                 </tr>
-                <tr *ngIf="prodSearchResult">
+                <!--<tr *ngIf="prodSearchResult">
                     <td colspan = "7" *ngIf="prodSearchResult.length==0">No data found</td>
-                </tr>
+                </tr>-->
                 </tbody>
             </table>
         </div>

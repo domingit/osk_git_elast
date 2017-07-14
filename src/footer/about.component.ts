@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import { ObjectService } from "templates/object.service";
-import { ModalService } from '../modal_window/modal.service';
 
 @Component({
   selector: 'about-body',
@@ -8,7 +7,7 @@ import { ModalService } from '../modal_window/modal.service';
 })
 export class AboutComponent {
 signedIn=false;
-constructor(private service: ObjectService, private modalserv: ModalService){
+constructor(private service: ObjectService){
   this.service.signn$.subscribe(
                 (signn) => {this.signedIn = signn;
                 }
@@ -21,8 +20,8 @@ constructor(private service: ObjectService, private modalserv: ModalService){
   }
 
   private closeModal(): any {
-    this.service.emitSubjectSign(true);
-    //this.service.emitSubjectSign(this.signedIn);
+    //this.service.emitSubjectSign(true);
+    this.service.emitSubjectModal(true);
   }
 
 }
