@@ -1,11 +1,14 @@
 <ng-template #rt let-r="result" let-t="term">
-  <a>
-     <div class="container-fluid">
+     <!--<a>-->
+     <div class="container-fluid typeahead-template">
        <div *ngIf="r._type === 'Person'">
          <table>
             <tr>
               <td>
-                  <!--<img style="max-width: 36px; max-height: 48px; border-radius: 3px; margin-left: -5px; margin-right: 5px;" [src]="{{r._source.photoURL}}" alt=""/>-->
+                  <img style="max-width: 36px; max-height: 48px; 
+                  border-radius: 3px; margin-left: -5px; 
+                  margin-right: 5px;" 
+                  [src]="r._source.photoURL" alt=""/>
               </td>
               <td>
                 <span style="display:block;">
@@ -88,7 +91,7 @@
         </div>
        </div>
     </div>
-  </a>
+     <!--</a>-->
 </ng-template>
 <!--<input id="searchField" 
     type="search" 

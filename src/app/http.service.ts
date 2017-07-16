@@ -29,6 +29,17 @@ export class CustomHttp extends Http {
     }
 
     get(url: string, options?: RequestOptionsArgs): Observable<Response> {
+        console.log("GET");
+        options = options || {};
+        return this.getHeaders()
+            .flatMap(headers => {
+                options.headers = headers;
+                return super.get(url, options);
+            })
+    }
+
+    request(url: string, options?: RequestOptionsArgs): Observable<Response> {
+        console.log("GET");
         options = options || {};
         return this.getHeaders()
             .flatMap(headers => {
@@ -41,6 +52,7 @@ export class CustomHttp extends Http {
      * Performs a request with `post` http method.
      */
     post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+        console.log("POST");
         options = options || {};
         return this.getHeaders()
             .flatMap(headers => {
@@ -53,6 +65,7 @@ export class CustomHttp extends Http {
      * Performs a request with `put` http method.
      */
     put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+        console.log("PUT");
         options = options || {};
         return this.getHeaders()
             .flatMap(headers => {
@@ -65,6 +78,7 @@ export class CustomHttp extends Http {
      * Performs a request with `delete` http method.
      */
     delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
+        console.log("DELETE");
         options = options || {};
         return this.getHeaders()
             .flatMap(headers => {
@@ -77,6 +91,7 @@ export class CustomHttp extends Http {
      * Performs a request with `patch` http method.
      */
     patch(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+        console.log("POST");
         options = options || {};
         return this.getHeaders()
             .flatMap(headers => {

@@ -449,7 +449,7 @@ footer {
         margin-left: -8px;
         margin-bottom: 0px;
         border-bottom: 0px solid #eee;
-        cursor:pointer;
+        /*cursor:pointer;*/
     }
 
     .navbar-form{
@@ -547,6 +547,7 @@ md-toolbar-row {
 .dropdown-item.active
 {
     background-color: #2e6da4 !important;
+    color: white !important;
 }
 
 .dropdown-menu button
@@ -623,7 +624,8 @@ a {
 .table-responsive {
     margin-bottom: 15px !important;
     border: 1px solid #337ab7;
-    border-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
 }
 
 .table-bordered {
@@ -638,7 +640,8 @@ a {
 .list-group {
     margin-bottom: 0px !important;
     border: 1px solid #337ab7;
-    border-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
 }
 
 .panel-body-corr {
@@ -660,4 +663,20 @@ a {
 
 .bold-name{
     font-weight: bold;
+}
+
+.panel {
+    border: none;
+    margin-bottom: 0px;
+    padding-top: 10px;
+    border-radius: 0px;
+    margin-top: -10px;
+}
+
+.typeahead-template {
+    pointer-events:none;
+}
+
+.typeahead-template:active {
+    color:white;
 }

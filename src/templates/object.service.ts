@@ -44,6 +44,10 @@ export class ObjectService {
     public type$ = this._typeSubject.asObservable();
     public emitSubject = (type: string) => this._typeSubject.next(type);
 
+    private _titleSubject = new Subject<string>();
+    public title$ = this._titleSubject.asObservable();
+    public emitSubjectTitle = (title: string) => this._titleSubject.next(title);
+
     public sortPropResp = 'subject_name';
     public sortPropServ = 'service_name';
     public sortPropInfra = 'system_name';

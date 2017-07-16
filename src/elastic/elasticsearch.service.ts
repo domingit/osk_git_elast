@@ -70,6 +70,7 @@ export class ElasticSearchService {
             maxRetries: 0,
             requestTimeout: 5000,
             apiVersion: '5.3' //, log: 'trace'
+            
         }
     );
   }

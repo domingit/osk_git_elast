@@ -9,7 +9,7 @@ import { ObjectService } from "templates/object.service";
 })
 
 export class ObjectBodyComponent{
-    private head_title:string;
+    head_title = "NO active TAB";
     isIn = false;   // store state
     id = '';
     actual_id = '';
@@ -20,7 +20,7 @@ export class ObjectBodyComponent{
     isFirstTimeOpened = true;
 
     constructor(private _router: Router, private activatedRoute:ActivatedRoute, private objectService: ObjectService){
-        this.head_title="NO active TAB";
+        //this.head_title="NO active TAB";
         this.tabsConfig =  this.objectService.tabsConfig;
         if(this.tabsConfig[this.objectService._type]) {
             for(let i in this.tabs){
@@ -48,8 +48,11 @@ export class ObjectBodyComponent{
             });
 
             this.objectService.type$.subscribe(
-                (type) => this.filteredTabs = this.objectService.filterTabs(type)
+                (type) => {this.filteredTabs = this.objectService.filterTabs(type)
+                this.head_title=type;
+                }
             );
+
 
     }
 

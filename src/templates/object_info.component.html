@@ -10,7 +10,7 @@
                             <div *ngIf="item._type == 'Person'">
 
                                 <p class="list-group-item-text" *ngIf="item._source.photoURL">
-                                                <!--<img style="max-width:72px; max-height:96px; border-radius: 6px;" ng-src="{{$item._source.photoURL}}" alt="Photo"/>-->
+                                    <img style="max-width:72px; max-height:96px; border-radius: 6px;" [src]="item._source.photoURL" alt="Photo"/>
                                 </p>
                                 <p style="margin-top: 5px;" class="list-group-item-text">
                                 <a (click)="navigateToTab(item._type,item._id, item._source.name)">
@@ -21,8 +21,8 @@
                             </div>
                             <div *ngIf="item._type != 'Person'">
                             <a (click)="navigateToTab(item._type,item._id)">{{item._source.name}} 
-                                - <span *ngIf="item._source.system_type == 'INT'">Internal </span>
-                                <span *ngIf="item._source.system_type == 'EXT'">External </span>
+                                - <!--<span *ngIf="item._source.system_type == 'INT'">Internal </span>-->
+                                <!--<span *ngIf="item._source.system_type == 'EXT'">External </span>-->
                                 
                                 {{item._type}}</a>
                             </div>
@@ -42,7 +42,7 @@
                         <strong>Domain: </strong> {{item._source.domain_name}}
                     </p>
                     <p *ngIf="item._source.status" class="list-group-item-text">
-                        <strong>Status: </strong> {{item._source.status}}
+                        <strong>Status: </strong>
                         <span [ngClass]="{'status-standard': item._source.status === 'Standard', 
                         'status-limitedUse': item._source.status === 'Standard - limited use', 
                         'status-phasedOut': item._source.status === 'Phased out', 
@@ -56,6 +56,7 @@
                         'status-active' : item._source.status === 'ACTIVE', 
                         'status-planned': item._source.status === 'PLANNED'}">
                         <i class="fa fa-circle"></i></span>
+                        {{item._source.status}}
                     </p>
                     <p *ngIf="0" class="list-group-item-text">
                         <span class="status-inEvaluation"> <i class="fa fa-circle"></i> </span>

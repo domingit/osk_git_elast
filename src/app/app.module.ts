@@ -94,8 +94,7 @@ import { Md2Module }  from 'md2';
     {
       provide: Http,
       useClass: CustomHttp
-    }
-    
+    }    
     ],
   bootstrap: [AppComponent]
 })

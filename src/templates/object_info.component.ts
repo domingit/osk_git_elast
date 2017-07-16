@@ -36,6 +36,7 @@ export class ObjectInfoComponent{
             else{
                 this.service.setSearchLabel(item[0]._source.name);
                 this.service.emitSubjectSearch(item[0]._source.name);
+                this.service.emitSubject(item[0]._type);
             }
              });
         this.sortPropResp = this.service.sortPropResp;
