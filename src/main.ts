@@ -9,9 +9,9 @@ if (environment.production) {
   enableProdMode();
 }
 
-//KeycloakService.init()
-//  .then(() => {
+KeycloakService.init()
+  .then(() => {
     const platform = platformBrowserDynamic();
     platform.bootstrapModule(AppModule);
-//  })
+  })
   //.catch(() => window.location.reload());

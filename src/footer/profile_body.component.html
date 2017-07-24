@@ -1,7 +1,8 @@
-<table *ngIf = "user">
+<table *ngIf="user">
     <tr>
         <td>
-            <img style="max-width: 72px; max-height: 96px; border-radius: 6px; margin-left: -5px; margin-right: 5px;" ng-show="signedIn" alt="Photo"/> <!--photo-->
+            <<img *ngIf="user.photo" style="max-width: 72px; max-height: 96px; border-radius: 6px; margin-left: -5px; margin-right: 5px;" [src]="user.photo" alt="Photo" />
+            <img *ngIf="!user.photo" style="max-width: 72px; max-height: 96px; border-radius: 6px; margin-left: -5px; margin-right: 5px;" alt="Photo" />
         </td>
         <td>
             <strong>{{user.name}}</strong>
@@ -11,4 +12,4 @@
         </td>
     </tr>
 </table>
-<span *ngIf = "!user"> You are not signed in!</span>
+<span *ngIf="!user"> You are not signed in!</span>
