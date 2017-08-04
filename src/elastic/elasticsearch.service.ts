@@ -65,8 +65,8 @@ export class ElasticSearchService {
     constructor(private ObjectService: ObjectService) {
         this._client = elasticsearch.Client(
         {
-            //host: 'https://localhost/',
-            host: this.ES_uri,
+            host: 'https://localhost/',
+            //host: 'http://localhost:9200',
             maxRetries: 0,
             requestTimeout: 5000,
             apiVersion: '5.3' //, log: 'trace'
