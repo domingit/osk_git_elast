@@ -32,14 +32,12 @@ export class AppComponent implements OnInit{
 
     if (_cookieService.get('ES_index_aliases') !== undefined ) {
         this.indexAliasesModel = JSON.parse(_cookieService.get('ES_index_aliases'));
-        console.log("found cookies");
+        //console.log("found cookies");
     }
     else {
         this.indexAliasesModel = this.setIndices(['default']);
-        console.log("NOT FOUND");
+        //console.log("NOT FOUND");
     }
-
-    console.log("model ->", this.indexAliasesModel);
 
   }
 

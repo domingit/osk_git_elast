@@ -21,10 +21,10 @@
                             </div>
                             <div *ngIf="item._type != 'Person'">
                             <a (click)="navigateToTab(item._type,item._id)">{{item._source.name}} 
-                                - <!--<span *ngIf="item._source.system_type == 'INT'">Internal </span>-->
+                                <!--<span *ngIf="item._source.system_type == 'INT'">Internal </span>-->
                                 <!--<span *ngIf="item._source.system_type == 'EXT'">External </span>-->
-                                
-                                {{item._type}}</a>
+                                <!--{{item._type}}-->
+                                    </a>
                             </div>
                         </span>
                     </h4>

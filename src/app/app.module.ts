@@ -39,6 +39,7 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
 //import { CookieModule } from 'ngx-cookie';
 //import { MaterialModule } from '@angular/material';
 import { Md2Module }  from 'md2';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 //import { Ng2KeycloakModule } from '@ebondu/angular2-keycloak';
 
 /*export function authHttpServiceFactory(http: Http, options: RequestOptions) {
@@ -79,7 +80,8 @@ import { Md2Module }  from 'md2';
     Md2Module,
     NgbModule.forRoot(),
     //CookieModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
     //TabsModule.forRoot(),
     //MultiselectDropdownModule
   ],
