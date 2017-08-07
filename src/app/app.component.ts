@@ -4,6 +4,7 @@ import {NgbdButtonsCheckbox} from './buttons_checkbox';
 import { ElasticSearchService } from '../elastic/elasticsearch.service';
 import { ObjectService } from "templates/object.service";
 import { unescape } from "querystring";
+import {CookieService} from 'angular2-cookie/core';
 
 //import { AuthHttp } from 'angular2-jwt';
 import { KeycloakService } from './keycloak.service';
@@ -11,7 +12,8 @@ import { KeycloakService } from './keycloak.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [CookieService]
 })
 export class AppComponent implements OnInit{
   navCollapsed = false;
@@ -21,16 +23,30 @@ export class AppComponent implements OnInit{
   indexAliasesModel : any;
   authz : any;
 
-  constructor(public http: Http, private elastic: ElasticSearchService, private objectService: ObjectService, private kc: KeycloakService) {
+  constructor(public http: Http, private elastic: ElasticSearchService, private objectService: ObjectService, private kc: KeycloakService, private _cookieService:CookieService) {
     this.searchText = this.objectService.searchText;
     this.signedIn = this.objectService.signedIn;
-    this.indexAliasesModel = this.setIndices(['default']);
-    /*if(localStorage.getItem("ES_index_aliases")!='null' && localStorage.getItem("ES_index_aliases")!='undefined'){
-        this.indexAliasesModel = this.elastic.indexAliasesModel = JSON.parse(localStorage.getItem("ES_index_aliases"));
-    } else {
+    //this.indexAliasesModel = this.setIndices(['default']);
+
+    this._cookieService.put('ES_index_aliases', JSON.stringify(this.indexAliasesModel));
+
+    if (_cookieService.get('ES_index_aliases') !== undefined ) {
+        this.indexAliasesModel = JSON.parse(_cookieService.get('ES_index_aliases'));
+        console.log("found cookies");
+    }
+    else {
         this.indexAliasesModel = this.setIndices(['default']);
-    }*/
+        console.log("NOT FOUND");
+    }
+
+    console.log("model ->", this.indexAliasesModel);
+
   }
+
+  getCookie(key: string){
+        return this._cookieService.get(key);
+    }
+
   ngOnInit(){
       this.authz = this.kc.getUserInfo();
       if (this.authz){

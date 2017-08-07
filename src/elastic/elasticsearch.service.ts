@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Response } from '@angular/http';
 import elasticsearch from 'elasticsearch';
 import { ObjectService } from "templates/object.service";
+import {CookieService} from 'angular2-cookie/core';
 
 @Injectable()
 export class ElasticSearchService {
@@ -66,7 +67,7 @@ export class ElasticSearchService {
 
   //host: this.ES_uri,
 
-    constructor(private ObjectService: ObjectService) {
+    constructor(private ObjectService: ObjectService, private _cookieService:CookieService) {
         this._client = elasticsearch.Client(
         {
             //host: 'https://localhost/',
@@ -81,6 +82,14 @@ export class ElasticSearchService {
 
   public setAllowedIndices(){
       localStorage.setItem('ES_index_aliases', JSON.stringify(this.indexAliasesModel));
+      var expireDate = new Date();
+      //expireDate.setDate(expireDate.getDate() + 7);
+      var today = new Date();
+      var tomorrow = new Date();
+      tomorrow.setDate(today.getDate()+7);
+      //this._cookieService.put('ES_index_aliases', JSON.stringify(this.indexAliasesModel), {path: '/', expires:expireDate, secure:true});
+      this._cookieService.put('ES_index_aliases', JSON.stringify(this.indexAliasesModel), {expires: new Date(tomorrow)});
+
       this.allowedIndices=[];
         for (let indexs in this.indexAliasesModel) {
             if(this.indexAliasesModel[indexs].value) {

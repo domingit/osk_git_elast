@@ -33,7 +33,8 @@ import { NewsComponent }        from '../footer/news.component';
 import { NgbdTypeaheadTemplate } from './typeahead-basic';
 import { KeycloakService }      from './keycloak.service';
 import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
-import { CustomHttp }      from './http.service'
+import { CustomHttp }      from './http.service';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 //import { CookieModule } from 'ngx-cookie';
 //import { MaterialModule } from '@angular/material';
@@ -84,7 +85,8 @@ import { Md2Module }  from 'md2';
   ],
   providers: [
     ElasticSearchService, 
-    ObjectService, 
+    ObjectService,
+    CookieService,
     KeycloakService,
     /*{
       provide: AuthHttp,
