@@ -15,7 +15,8 @@ export class ObjectInfrastructureComponent{
     sortReverseInfra: any;
     actual_id:any;
     infraText:any;
-    countData = 200;
+    countData = 20;
+    totalData = 10;
     moreData=false;
     id:any;
 
@@ -30,6 +31,7 @@ export class ObjectInfrastructureComponent{
             )
             .subscribe((item) => { this.infraSearchResult = this.service.infraSearchResult = this.sortData(item);
             this.id=this._router.url.split('=')[1];
+            this.totalData = elastic.infraTotal;
             if(this.countData < elastic.infraTotal)
                 {this.moreData=true;
                 this.infraText='>>> Get all ' + elastic.infraTotal + ' results (Warning: Hundreds results can slow down your browser!)';}
@@ -57,7 +59,7 @@ export class ObjectInfrastructureComponent{
             .queryParams
             .map(params => params.id)
             .flatMap((id) =>
-                this.elastic.searchInInfraModel(id, 10000)
+                this.elastic.searchInInfraModel(id, this.totalData, true)
             )
             .subscribe((item) => { this.infraSearchResult = this.service.infraSearchResult = this.sortData(item);
             this.moreData=false;

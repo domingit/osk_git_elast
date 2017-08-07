@@ -25,6 +25,8 @@ export class ElasticSearchService {
     public prod_id;
     public servSearchResult;
     public serv_id;
+    public objSearchResult;
+    public obj_id;
 
     public indexAliasesModel = [
       {type: "alias_systems", value : true, name: "System"},
@@ -60,13 +62,15 @@ export class ElasticSearchService {
   public prodTotal;
   public respTotal;
 
+  public objectInf;
+
   //host: this.ES_uri,
 
     constructor(private ObjectService: ObjectService) {
         this._client = elasticsearch.Client(
         {
-            host: 'https://localhost/',
-            //host: 'http://localhost:9200',
+            //host: 'https://localhost/',
+            host: 'http://localhost:9200',
             maxRetries: 0,
             requestTimeout: 5000,
             apiVersion: '5.3' //, log: 'trace'
@@ -227,28 +231,36 @@ export class ElasticSearchService {
     public getObjectById = function (val) {
         this.id = val;
         let index = this.getAllIndices();
-        return Observable.fromPromise(this._client.search({
-            index: index,
-            body: {
-                "query": {
-                    "ids": {
-                        "values": [val]
+        if(this.obj_id!=val) {
+            this.objSearchResult = Observable.fromPromise(this._client.search({
+                index: index,
+                body: {
+                    "query": {
+                        "ids": {
+                            "values": [val]
+                        }
                     }
                 }
-            }
-        })).map(
+            }))
+            this.obj_id = val;
+        }
+        return this.objSearchResult
+        .map(
             (resp) => { 
+                this.ObjectService.setSearchLabel((<any>resp).hits.hits[0]._source.name);
+                this.ObjectService.emitSubjectSearch((<any>resp).hits.hits[0]._source.name);
+                this.ObjectService.emitSubject((<any>resp).hits.hits[0]._type);
                 return (<any>resp).hits.hits[0];
             }
         )
         .catch(this._serverError);
     };    
 
-     public searchInInfraModel = function (val, size) {
+     public searchInInfraModel = function (val, size, more?) {
         var index = "alias_system_instance_servers";
         this.infraModelId = val;
         //console.log(val);
-        if(this.infra_id!=val)
+        if(this.infra_id!=val || more)
         {
         this.infraSearchResult = Observable.fromPromise(this._client.search({
             index: index,
@@ -267,6 +279,12 @@ export class ElasticSearchService {
             }
         }))
         this.infra_id = val;
+        this.objectInf = this.getObjectById(val)
+                .subscribe((item) => { this.item = item;
+                    /*this.ObjectService.setSearchLabel(item._source.name);
+                    this.ObjectService.emitSubjectSearch(item._source.name);
+                this.ObjectService.emitSubject(item._type);*/
+                });
         }
         return this.infraSearchResult
         .map(
@@ -278,10 +296,10 @@ export class ElasticSearchService {
         .catch(this._serverError);
     };
 
-    public searchInProdModel = function (val, size) {
+    public searchInProdModel = function (val, size, more?) {
         var index = "alias_product_services";
         this.prodModelId = val;
-        if(this.prod_id!=val)
+        if(this.prod_id!=val || more)
             {
             this.prodSearchResult =Observable.fromPromise(this._client.search({
                 index: index,
@@ -298,6 +316,12 @@ export class ElasticSearchService {
                 }
             }))
             this.prod_id=val;
+            this.objectInf = this.getObjectById(val)
+                .subscribe((item) => { this.item = item;
+                    /*this.ObjectService.setSearchLabel(item._source.name);
+                    this.ObjectService.emitSubjectSearch(item._source.name);
+                this.ObjectService.emitSubject(item._type);*/
+                });
             }
         return this.prodSearchResult.map(
             (resp) => { 
@@ -308,10 +332,10 @@ export class ElasticSearchService {
         .catch(this._serverError);
     };
 
-    public searchInServModel = function (val, size) {
+    public searchInServModel = function (val, size, more?) {
         var index = "alias_service_process_systems";
         this.servModelId = val;
-        if(this.serv_id!=val)
+        if(this.serv_id!=val || more)
             {
             this.servSearchResult = Observable.fromPromise(this._client.search({
                 index: index,
@@ -330,6 +354,12 @@ export class ElasticSearchService {
                 }
             }))
             this.serv_id=val;
+            this.objectInf = this.getObjectById(val)
+                .subscribe((item) => { this.item = item;
+                    /*this.ObjectService.setSearchLabel(item._source.name);
+                    this.ObjectService.emitSubjectSearch(item._source.name);
+                this.ObjectService.emitSubject(item._type);*/
+                });
             }
         return this.servSearchResult.map(
             (resp) => { 
@@ -340,10 +370,10 @@ export class ElasticSearchService {
         .catch(this._serverError);
     };
 
-    public searchInRespModel = function (val, size) {
+    public searchInRespModel = function (val, size, more?) {
         var index = "alias_responsibilities";
         this.respModelId = val;
-        if(this.resp_id!=val)
+        if(this.resp_id!=val || more)
             {
             this.respSearchResult = Observable.fromPromise(this._client.search({
                 index: index,
@@ -360,6 +390,12 @@ export class ElasticSearchService {
                 }
             }))
             this.resp_id=val;
+            this.objectInf = this.getObjectById(val)
+                .subscribe((item) => { this.item = item;
+                    /*this.ObjectService.setSearchLabel(item._source.name);
+                    this.ObjectService.emitSubjectSearch(item._source.name);
+                this.ObjectService.emitSubject(item._type);*/
+                });
             }
         return this.respSearchResult.map(
             (resp) => { 

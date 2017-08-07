@@ -13,7 +13,8 @@ export class ObjectProductComponent{
     prodSearchResult: any;
     sortPropProd = '';
     sortReverseProd = false;
-    countData=200;
+    countData=20;
+    totalData = 10;
     moreData = false;
     prodText:any;
     id:any;
@@ -28,6 +29,7 @@ export class ObjectProductComponent{
             )
             .subscribe((item) => { this.prodSearchResult = this.service.prodSearchResult =  this.sortData(item);
             this.id=this._router.url.split('=')[1];
+            this.totalData = elastic.prodTotal;
             if(this.countData < elastic.prodTotal)
                 {this.moreData=true;
                 this.prodText='>>> Get all ' + elastic.prodTotal + ' results (Warning: Hundreds results can slow down your browser!)';}
@@ -53,7 +55,7 @@ export class ObjectProductComponent{
             .queryParams
             .map(params => params.id)
             .flatMap((id) =>
-                this.elastic.searchInProdModel(id, this.countData)
+                this.elastic.searchInProdModel(id, this.totalData, true)
             )
             .subscribe((item) => { this.prodSearchResult = this.service.prodSearchResult =  this.sortData(item);
             this.moreData=false;

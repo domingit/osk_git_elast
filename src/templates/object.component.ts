@@ -16,6 +16,7 @@ export class ObjectBodyComponent{
     tabs:any = this.objectService.tabs;
     filteredTabs = this.tabs;
     tabsConfig:any;
+    actualTab:any;
 
     isFirstTimeOpened = true;
 
@@ -42,14 +43,23 @@ export class ObjectBodyComponent{
                         {_ruta=element; }
                     else{_id=element;}
                 });
-
-                this.setActualPage(_ruta,_id.split("=")[1]);
+                this.actual_id = _id.split("=")[1];
+                this.setActualPage(_ruta,this.actual_id);
 
             });
 
             this.objectService.type$.subscribe(
                 (type) => {this.filteredTabs = this.objectService.filterTabs(type)
-                this.head_title=type;
+                    //this.head_title=type;
+                    if (this.actualTab == "Object Info") {
+                        this.head_title=type
+                    }
+                    var filteredTab = this.filteredTabs.find((a) => a.title === this.actualTab);
+                    if(filteredTab) {
+                        if(filteredTab.hidden){
+                            this._router.navigate(['object/info'], {queryParams: {id: this.actual_id}});
+                        }
+                    }
                 }
             );
 
@@ -64,7 +74,10 @@ export class ObjectBodyComponent{
             var found = this.tabs.find((a) => a.routerLink === _ruta);
             if(found) {
                 this.tabs[this.tabs.indexOf(found)].active=true;
-                this.head_title = this.tabs[this.tabs.indexOf(found)].title;
+                this.actualTab = this.tabs[this.tabs.indexOf(found)].title;
+                if (this.actualTab != "Object Info") {
+                        this.head_title=this.actualTab;
+                    }
             }
         }
     }

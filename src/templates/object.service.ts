@@ -99,7 +99,7 @@ export class ObjectService {
   ];
 
   public tabsConfig = {
-      Proces:['Object Info', 'Product model', 'Responsibility'],
+      Person:['Object Info', 'Responsibility'],
       Process:['Object Info', 'Product model', 'Service model', 'Infra model', 'Responsibility'],
       System:['Object Info', 'Service model', 'Infra model', 'Responsibility']
   }

@@ -13,7 +13,8 @@ export class ObjectServiceComponent{
     servSearchResult: any;
     sortPropServ = '';
     sortReverseServ = false;
-    countData = 200;
+    totalData = 10;
+    countData = 20;
     moreData = false;
     servText:any;
     id:any;
@@ -28,6 +29,7 @@ export class ObjectServiceComponent{
             )
             .subscribe((item) => { this.servSearchResult = this.sortData(item);
             this.id=this._router.url.split('=')[1];
+            this.totalData = elastic.servTotal;
             if(this.countData < elastic.servTotal)
                 {this.moreData=true;
                 this.servText='>>> Get all ' + elastic.servTotal + ' results (Warning: Hundreds results can slow down your browser!)';}
@@ -53,9 +55,11 @@ export class ObjectServiceComponent{
             .queryParams
             .map(params => params.id)
             .flatMap((id) =>
-                this.elastic.searchInServModel(id, this.countData)
+                this.elastic.searchInServModel(id, this.totalData, true)
             )
-            .subscribe((item) => { this.servSearchResult = this.service.servSearchResult =  this.sortData(item);
+            .subscribe((item) => { 
+            this.servSearchResult = this.service.servSearchResult =  this.sortData(item);
+            console.log(this.service.servSearchResult);
             this.moreData=false;
             
         });

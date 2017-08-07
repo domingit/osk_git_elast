@@ -13,7 +13,8 @@ export class ObjectResponsibilityComponent {
     respSearchResult: any;
     sortReverseResp: any;
     sortPropResp:any;
-    countData = 200;
+    countData = 20;
+    totalData = 10;
     moreData = false;
     respText: any;
     id:any;
@@ -29,6 +30,7 @@ export class ObjectResponsibilityComponent {
             )
             .subscribe((item) => { 
                 this.id=this._router.url.split('=')[1];
+                this.totalData = elastic.respTotal;
                 this.respSearchResult = this.service.respSearchResult = this.sortData(item);
                 if(this.countData < elastic.respTotal)
                     {this.moreData=true;
@@ -54,7 +56,7 @@ export class ObjectResponsibilityComponent {
             .queryParams
             .map(params => params.id)
             .flatMap((id) =>
-                this.elastic.searchInRespModel(id, this.countData)
+                this.elastic.searchInRespModel(id, this.totalData, true)
             )
             .subscribe((item) => { this.respSearchResult = this.service.respSearchResult =  this.sortData(item);
             this.moreData=false;

@@ -33,11 +33,11 @@ export class ObjectInfoComponent{
             if(!item[0]){
                 this.service.setSearchLabel('NO DATA');
             }
-            else{
+            /*else{
                 this.service.setSearchLabel(item[0]._source.name);
                 this.service.emitSubjectSearch(item[0]._source.name);
                 this.service.emitSubject(item[0]._type);
-            }
+            }*/
              });
         this.sortPropResp = this.service.sortPropResp;
         this.sortReverseResp = this.service.sortReverseResp;

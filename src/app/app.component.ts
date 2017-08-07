@@ -34,7 +34,7 @@ export class AppComponent implements OnInit{
   ngOnInit(){
       this.authz = this.kc.getUserInfo();
       if (this.authz){
-          this.signedIn=this.authz.loggedIn;
+          this.signedIn=!this.authz.loggedIn;
           this.objectService.signedIn = this.signedIn;
           this.objectService.emitSubjectSign(this.signedIn);
           this.objectService.emitSubjectAuth(this.authz);

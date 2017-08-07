@@ -237,6 +237,41 @@ body {
     }
 }
 
+
+/*.modal-dialog {
+    max-width: 80%;
+    width: auto !important;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+@media (min-width: 700px) {
+    .modal-dialog {
+        max-width: 800px;
+    }
+}*/
+
+.modal {
+    text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+    .modal:before {
+        display: inline-block;
+        vertical-align: middle;
+        content: " ";
+        /*height: 100%;*/
+    }
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+/*https://stackoverflow.com/questions/18422223/bootstrap-3-modal-vertical-position-center*/
+
 .other-times-page {
     margin-top: 100px;
 }
