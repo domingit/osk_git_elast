@@ -70,12 +70,11 @@ export class ElasticSearchService {
     constructor(private ObjectService: ObjectService, private _cookieService:CookieService) {
         this._client = elasticsearch.Client(
         {
-            //host: 'https://localhost/',
-            host: 'http://localhost:9200',
+            host: 'https://localhost/',
+            //host: 'http://localhost:9200',
             maxRetries: 0,
             requestTimeout: 5000,
             apiVersion: '5.3' //, log: 'trace'
-            
         }
     );
   }
