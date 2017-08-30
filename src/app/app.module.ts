@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions, JsonpModule } from '@angular/http';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbTypeaheadModule} from '../ng-bootstrap/typeahead/typeahead.module';
 import {ModalComponent} from '../modal_window/modal.component';
 import { NgbdButtonsCheckbox } from './buttons_checkbox';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
@@ -78,7 +78,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     JsonpModule,
     Md2Module,
-    NgbModule.forRoot(),
+    NgbTypeaheadModule.forRoot(),
     CookieModule.forRoot(),
     AppRoutingModule,
     BrowserAnimationsModule
