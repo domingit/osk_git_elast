@@ -34,7 +34,7 @@ import { NgbdTypeaheadTemplate } from './typeahead-basic';
 import { KeycloakService }      from './keycloak.service';
 import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
 import { CustomHttp }      from './http.service';
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { CookieModule } from 'ngx-cookie';
 
 //import { CookieModule } from 'ngx-cookie';
 //import { MaterialModule } from '@angular/material';
@@ -79,7 +79,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     JsonpModule,
     Md2Module,
     NgbModule.forRoot(),
-    //CookieModule.forRoot(),
+    CookieModule.forRoot(),
     AppRoutingModule,
     BrowserAnimationsModule
     //TabsModule.forRoot(),
@@ -88,7 +88,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   providers: [
     ElasticSearchService, 
     ObjectService,
-    CookieService,
     KeycloakService,
     /*{
       provide: AuthHttp,
