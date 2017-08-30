@@ -114,9 +114,10 @@ export class NgbTypeaheadWindow implements OnInit {
   }
 
   private _activeChanged() {
-    if ( this.activeIdx > this.results.length){
-      this.activeIdx = 0;
-    }
     this.activeChangeEvent.emit(this.activeIdx >= 0 ? this.id + '-' + this.activeIdx : undefined);
+  }
+
+  public resetActive() {
+    this.activeIdx = 0;
   }
 }
