@@ -97,7 +97,7 @@ export class NgbdTypeaheadTemplate {
           distinctUntilChanged.call(
             debounceTime.call(text$, 300)),
           () => {
-            this.indexLength =  this.elastic.setAllowedIndices().length;
+            this.indexLength =  this.elastic.getAllowedIndices().length;
             if(this.indexLength==0){
               alert('You do not have selected any index. You must choose at least one in Settings');
             }
