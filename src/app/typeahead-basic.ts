@@ -107,8 +107,8 @@ export class NgbdTypeaheadTemplate {
             }
           }),
         term =>
-          //term.length < 2 || this.indexLength == 0 ? [] :
-          this.indexLength == 0 ? _catch.call(
+          term.length < 2 || this.indexLength === 0 ? of([]) :
+          this.indexLength === 0 ? _catch.call(
             of.call([])
             ) :
           _catch.call(
