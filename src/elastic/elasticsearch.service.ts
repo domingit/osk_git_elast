@@ -4,6 +4,7 @@ import { Response } from '@angular/http';
 import elasticsearch from 'elasticsearch';
 import { ObjectService } from "templates/object.service";
 import {CookieService} from 'ngx-cookie';
+import {KeycloakService} from '../app/keycloak.service';
 
 @Injectable()
 export class ElasticSearchService {
@@ -67,18 +68,26 @@ export class ElasticSearchService {
 
   //host: this.ES_uri,
 
-    constructor(private ObjectService: ObjectService, private _cookieService:CookieService) {
+    constructor(private ObjectService: ObjectService, private _cookieService: CookieService, private keyclock: KeycloakService) {
       this.setIndices(['cookies']);
-      this._client = elasticsearch.Client(
-        {
-            host: 'https://localhost/',
-            //host: 'http://localhost:9200',
-            maxRetries: 0,
-            requestTimeout: 5000,
-            apiVersion: '5.3' //, log: 'trace'
-        }
-    );
-  }
+      keyclock.getToken().then(token => {
+        this._client = elasticsearch.Client(
+          {
+            host: {
+              //host: 'https://localhost/',
+              host: 'localhost',
+              port: 9200,
+              headers : {
+                'Authorization': 'Bearer ' + token
+              },
+              maxRetries: 0,
+              requestTimeout: 5000,
+              apiVersion: '5.3', //, log: 'trace'
+            }
+          }
+        );
+      });
+    }
 
   public getAllowedIndices(){
       // localStorage.setItem('ES_index_aliases', JSON.stringify(this.indexAliasesModel));
