@@ -18,7 +18,8 @@ import { of } from "rxjs/observable/of";
 
 @Component({
   selector: 'ngbd-typeahead-template',
-  templateUrl: './typeahead-basic.html'
+  templateUrl: './typeahead-basic.html',
+  styleUrls: ['./loading.css'],
 })
 export class NgbdTypeaheadTemplate {
 
