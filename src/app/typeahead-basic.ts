@@ -52,7 +52,7 @@ export class NgbdTypeaheadTemplate {
                   this.searchText = this.objectService.getPlaceholder(signn);
                 }
             );
-      
+
       this.objectService.searchName$.subscribe(
                 (searchName) => {this.model = searchName;
                   this.searchName = searchName;
@@ -60,36 +60,6 @@ export class NgbdTypeaheadTemplate {
             );
 
   }
-
-  /*search = (text$: Observable<string>) =>
-    text$
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .do(() => {
-      this.indexLength =  this.elastic.setAllowedIndices().length;
-      if(this.indexLength==0){
-        alert('You do not have selected any index. You must choose at least one in Settings');
-      }
-      else{
-        this.searching = true;
-        //console.log("citam");
-      }
-    })
-    //term.length < 2 || this.indexLength == 0 ? []
-      .switchMap(term => 
-     term.length < 2 ? []
-        : this.elastic.suggest(term)
-          .do(() => {this.searchFailed = false
-          })
-          .catch(() => {
-            this.searchFailed = true;
-            //console.log("chyba");
-            return Observable.of([]);
-          })
-          )
-      .do(() => {this.searching = false
-      //console.log("nacitane");
-    });*/
 
     search = (text$: Observable<string>) =>
     _do.call(
@@ -104,7 +74,6 @@ export class NgbdTypeaheadTemplate {
             }
             else{
               this.searching = true;
-              //console.log("citam");
             }
           }),
         term =>
@@ -123,12 +92,12 @@ export class NgbdTypeaheadTemplate {
       () => this.searching = false);
 
 
-  /*formatter = (x: { _source: any }) => 
+  /*formatter = (x: { _source: any }) =>
     x._source.name;*/
 
     formatter = (x: { _source: any }) =>
-    this.searchName;  
-  
+    this.searchName;
+
   valuechange(newValue) {
     //console.log(newValue);
   }
