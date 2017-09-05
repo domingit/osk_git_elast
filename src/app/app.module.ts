@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions, JsonpModule } from '@angular/http';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbTypeaheadModule} from '../ng-bootstrap/typeahead/typeahead.module';
 import {ModalComponent} from '../modal_window/modal.component';
 import { NgbdButtonsCheckbox } from './buttons_checkbox';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
@@ -34,7 +34,7 @@ import { NgbdTypeaheadTemplate } from './typeahead-basic';
 import { KeycloakService }      from './keycloak.service';
 import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
 import { CustomHttp }      from './http.service';
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { CookieModule } from 'ngx-cookie';
 
 //import { CookieModule } from 'ngx-cookie';
 //import { MaterialModule } from '@angular/material';
@@ -78,8 +78,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     JsonpModule,
     Md2Module,
-    NgbModule.forRoot(),
-    //CookieModule.forRoot(),
+    NgbTypeaheadModule.forRoot(),
+    CookieModule.forRoot(),
     AppRoutingModule,
     BrowserAnimationsModule
     //TabsModule.forRoot(),
@@ -88,7 +88,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   providers: [
     ElasticSearchService, 
     ObjectService,
-    CookieService,
     KeycloakService,
     /*{
       provide: AuthHttp,

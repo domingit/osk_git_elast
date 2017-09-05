@@ -4,7 +4,7 @@ import {NgbdButtonsCheckbox} from './buttons_checkbox';
 import { ElasticSearchService } from '../elastic/elasticsearch.service';
 import { ObjectService } from "templates/object.service";
 import { unescape } from "querystring";
-import {CookieService} from 'angular2-cookie/core';
+import {CookieService} from 'ngx-cookie';
 
 //import { AuthHttp } from 'angular2-jwt';
 import { KeycloakService } from './keycloak.service';
@@ -26,18 +26,7 @@ export class AppComponent implements OnInit{
   constructor(public http: Http, private elastic: ElasticSearchService, private objectService: ObjectService, private kc: KeycloakService, private _cookieService:CookieService) {
     this.searchText = this.objectService.searchText;
     this.signedIn = this.objectService.signedIn;
-    //this.indexAliasesModel = this.setIndices(['default']);
-
-    this._cookieService.put('ES_index_aliases', JSON.stringify(this.indexAliasesModel));
-
-    if (_cookieService.get('ES_index_aliases') !== undefined ) {
-        this.indexAliasesModel = JSON.parse(_cookieService.get('ES_index_aliases'));
-        //console.log("found cookies");
-    }
-    else {
-        this.indexAliasesModel = this.setIndices(['default']);
-        //console.log("NOT FOUND");
-    }
+    this.indexAliasesModel = this.elastic.getIndices();
 
   }
 

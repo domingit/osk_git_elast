@@ -3,7 +3,8 @@ import { Observable } from 'rxjs';
 import { Response } from '@angular/http';
 import elasticsearch from 'elasticsearch';
 import { ObjectService } from "templates/object.service";
-import {CookieService} from 'angular2-cookie/core';
+import {CookieService} from 'ngx-cookie';
+import {KeycloakService} from '../app/keycloak.service';
 
 @Injectable()
 export class ElasticSearchService {
@@ -67,67 +68,94 @@ export class ElasticSearchService {
 
   //host: this.ES_uri,
 
-    constructor(private ObjectService: ObjectService, private _cookieService:CookieService) {
+    constructor(private ObjectService: ObjectService, private _cookieService: CookieService, private keyclock: KeycloakService) {
+      this.setIndices(['cookies']);
+      keyclock.getToken().then(token => {
         this._client = elasticsearch.Client(
-        {
-            host: 'https://localhost/',
-            //host: 'http://localhost:9200',
-            maxRetries: 0,
-            requestTimeout: 5000,
-            apiVersion: '5.3' //, log: 'trace'
-        }
-    );
-  }
-
-  public setAllowedIndices(){
-      localStorage.setItem('ES_index_aliases', JSON.stringify(this.indexAliasesModel));
-      var expireDate = new Date();
-      //expireDate.setDate(expireDate.getDate() + 7);
-      var today = new Date();
-      var tomorrow = new Date();
-      tomorrow.setDate(today.getDate()+7);
-      //this._cookieService.put('ES_index_aliases', JSON.stringify(this.indexAliasesModel), {path: '/', expires:expireDate, secure:true});
-      this._cookieService.put('ES_index_aliases', JSON.stringify(this.indexAliasesModel), {expires: new Date(tomorrow)});
-
-      this.allowedIndices=[];
-        for (let indexs in this.indexAliasesModel) {
-            if(this.indexAliasesModel[indexs].value) {
-                this.allowedIndices.push(this.indexAliasesModel[indexs].type);
+          {
+            host: {
+              //host: 'https://localhost/',
+              host: 'localhost',
+              port: 9200,
+              headers : {
+                'Authorization': 'Bearer ' + token
+              },
+              maxRetries: 0,
+              requestTimeout: 5000,
+              apiVersion: '5.3', //, log: 'trace'
             }
-        }
-      return this.allowedIndices;
+          }
+        );
+      });
+    }
+
+  public getAllowedIndices(){
+      // localStorage.setItem('ES_index_aliases', JSON.stringify(this.indexAliasesModel));
+      // var today = new Date();
+      // var tomorrow = new Date();
+      // tomorrow.setDate(today.getDate()+7);
+      //this._cookieService.put('ES_index_aliases', JSON.stringify(this.indexAliasesModel), {path: '/', expires:expireDate, secure:true});
+      // this._cookieService.put('ES_index_aliases', JSON.stringify(this.indexAliasesModel), {expires: new Date(tomorrow)});
+
+    this.allowedIndices = [];
+      for (const indexs in this.indexAliasesModel) {
+          if(this.indexAliasesModel[indexs].value) {
+              this.allowedIndices.push(this.indexAliasesModel[indexs].type);
+          }
+      }
+    return this.allowedIndices;
   }
 
   public getAllIndices(){
-      this.allIndices=[];
-        for (let indexs in this.indexAliasesModel) {
+      this.allIndices = [];
+        for (const indexs in this.indexAliasesModel) {
             this.allIndices.push(this.indexAliasesModel[indexs].type);
         }
       return this.allIndices;
   }
 
+  public getIndices() {
+    return this.indexAliasesModel;
+  }
+
   setIndices(index){
-        for (let entry in this.indexAliasesModel) {
-          if(index.length==0){
-            this.indexAliasesModel[entry].value=false;
+    const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+    if(index[0] === 'cookies') {
+      const cookiesJSON = this._cookieService.get('ES_index_aliases');
+      if(cookiesJSON === undefined){
+        this.indexAliasesModel = this.defaultIndexAliasesModel;
+      } else {
+        this.indexAliasesModel = JSON.parse(cookiesJSON);
+      }
+    } else {
+        for (const entry in this.indexAliasesModel) {
+          if(index.length == 0){
+            this.indexAliasesModel[entry].value = false;
           }
-          else if(index[0]=="all"){
-            this.indexAliasesModel[entry].value=true;
+          else if(index[0] == "all"){
+            this.indexAliasesModel[entry].value = true;
           }
-          else if (index[0]=="default") {
+          else if (index[0] == "default") {
             this.indexAliasesModel[entry].value = this.defaultIndexAliasesModel[entry].value;
           }
           else {
-            if(index.indexOf(this.indexAliasesModel[entry].type) > -1) 
+            if(index.indexOf(this.indexAliasesModel[entry].type) > -1)
             {
-              this.indexAliasesModel[entry].value=true;
+              this.indexAliasesModel[entry].value = true;
             }
             else {
-              this.indexAliasesModel[entry].value=false;
+              this.indexAliasesModel[entry].value = false;
             }
           }
         }
+      }
+        this._cookieService.put('ES_index_aliases', JSON.stringify(this.indexAliasesModel), {expires: new Date(tomorrow)});
         return this.indexAliasesModel;
+    }
+
+    saveCookies(){
+      const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+      this._cookieService.put('ES_index_aliases', JSON.stringify(this.indexAliasesModel), {expires: new Date(tomorrow)});
     }
 
   private _serverError(err: any) {
@@ -138,8 +166,8 @@ export class ElasticSearchService {
     }
 
   public suggest(val, index?) : any {
-      var indices = this.setAllowedIndices();
-      if(indices.length>0){
+      var indices = this.getAllowedIndices();
+      if(indices.length > 0){
        return Observable.fromPromise(this._client.search({
             index: indices,
             body: {

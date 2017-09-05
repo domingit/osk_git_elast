@@ -1,4 +1,5 @@
 import {Component, Input, Output, EventEmitter, DoCheck} from '@angular/core';
+import { ElasticSearchService } from '../elastic/elasticsearch.service';
 
 @Component({
   selector: 'ngbd-buttons-checkbox',
@@ -9,7 +10,7 @@ export class NgbdButtonsCheckbox implements DoCheck {
   @Input() indexAliasesModel: any;
   @Output() indexAliasesModelChange: EventEmitter<any> = new EventEmitter();
 
-  constructor(){}
+  constructor(private elastic: ElasticSearchService){}
 
   ngDoCheck() {
     this.indexAliasesModelChange.next(this.indexAliasesModel);
@@ -22,4 +23,7 @@ export class NgbdButtonsCheckbox implements DoCheck {
         }
   }
 
+  onClick(index) {
+    this.elastic.saveCookies();
+  }
 }
